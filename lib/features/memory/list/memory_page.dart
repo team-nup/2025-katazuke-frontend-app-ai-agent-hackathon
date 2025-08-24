@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'components/memory_list.dart';
-import '../../core/database/repositories/memory_repository.dart';
-import '../../core/models/shared/memory.dart';
+import '../../../core/database/repositories/memory_repository.dart';
+import '../../../core/models/shared/memory.dart';
 
 class MemoryPage extends StatefulWidget {
   const MemoryPage({super.key});

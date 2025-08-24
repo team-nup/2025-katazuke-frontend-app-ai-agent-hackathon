@@ -1,6 +1,6 @@
 import 'package:uuid/uuid.dart';
-import '../../../core/models/shared/memory.dart';
-import '../../../core/models/shared/memory_status.dart';
+import '../../../../core/models/shared/memory.dart';
+import '../../../../core/models/shared/memory_status.dart';
 
 class MemoryFactory {
   static Memory createFromForm({

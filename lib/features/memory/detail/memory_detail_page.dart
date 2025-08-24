@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/models/shared/memory.dart';
+import '../../../core/models/shared/memory.dart';
 import 'components/memory_info.dart';
 import 'components/memory_images.dart';
 

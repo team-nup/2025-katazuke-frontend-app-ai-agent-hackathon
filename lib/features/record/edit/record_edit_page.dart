@@ -1,31 +1,48 @@
 import 'package:flutter/material.dart';
-import '../../core/models/shared/memory_status.dart';
-import '../../core/database/repositories/memory_repository.dart';
-import '../../native/camera_service.dart';
-import 'components/memory_form.dart';
-import 'components/photo_section.dart';
-import 'utils/memory_validator.dart';
-import 'utils/memory_factory.dart';
+import '../../../core/models/shared/memory.dart';
+import '../../../core/models/shared/memory_status.dart';
+import '../../../core/database/repositories/memory_repository.dart';
+import '../../../native/camera_service.dart';
+import '../components/memory_form.dart';
+import '../components/photo_section.dart';
+import '../utils/memory_validator.dart';
 
-class RecordPage extends StatefulWidget {
-  const RecordPage({super.key});
+class RecordEditPage extends StatefulWidget {
+  final Memory memory;
+  
+  const RecordEditPage({
+    super.key,
+    required this.memory,
+  });
 
   @override
-  State<RecordPage> createState() => _RecordPageState();
+  State<RecordEditPage> createState() => _RecordEditPageState();
 }
 
-class _RecordPageState extends State<RecordPage> {
-  // Form data using Memory type structure
-  String _title = '';
-  String? _detail;
-  int? _startAge;
-  int? _endAge;
-  List<String> _imagePaths = [];
-  MemoryStatus _status = MemoryStatus.disposed;
-
+class _RecordEditPageState extends State<RecordEditPage> {
+  // Form data using Memory type structure (initialized with existing data)
+  late String _title;
+  late String? _detail;
+  late int? _startAge;
+  late int? _endAge;
+  late List<String> _imagePaths;
+  late MemoryStatus _status;
+  
   // UI state
   final CameraService _cameraService = CameraService();
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize form with existing memory data
+    _title = widget.memory.title;
+    _detail = widget.memory.detail;
+    _startAge = widget.memory.startAge;
+    _endAge = widget.memory.endAge;
+    _imagePaths = List.from(widget.memory.imagePaths ?? []);
+    _status = widget.memory.status;
+  }
 
   @override
   void dispose() {
@@ -50,7 +67,7 @@ class _RecordPageState extends State<RecordPage> {
     }
   }
 
-  Future<void> _saveMemory() async {
+  Future<void> _updateMemory() async {
     if (_isLoading) return;
 
     // Validation
@@ -60,7 +77,7 @@ class _RecordPageState extends State<RecordPage> {
       startAge: _startAge,
       endAge: _endAge,
     );
-
+    
     if (validationError != null) {
       _showErrorToast(validationError);
       return;
@@ -71,26 +88,32 @@ class _RecordPageState extends State<RecordPage> {
     });
 
     try {
-      // Create Memory using factory
-      final memory = MemoryFactory.createFromForm(
-        title: _title,
-        detail: _detail,
+      // Update Memory using copyWith
+      final updatedMemory = widget.memory.copyWith(
+        title: _title.trim(),
+        detail: _detail?.isEmpty == true ? null : _detail?.trim(),
         startAge: _startAge,
         endAge: _endAge,
-        imagePaths: _imagePaths,
+        imagePaths: _imagePaths.isEmpty ? null : _imagePaths,
         status: _status,
+        disposedAt: _status == MemoryStatus.disposed 
+            ? (widget.memory.disposedAt ?? DateTime.now()) 
+            : (_status != MemoryStatus.disposed ? null : widget.memory.disposedAt),
+        updatedAt: DateTime.now(),
       );
 
       // Save to database
-      await MemoryRepository.insert(memory);
+      await MemoryRepository.update(updatedMemory);
 
       // Show success message
       _showSuccessToast();
-
-      // Reset form
-      _resetForm();
+      
+      // Navigate back
+      if (mounted) {
+        Navigator.of(context).pop(updatedMemory);
+      }
     } catch (e) {
-      _showErrorToast('保存エラー: $e');
+      _showErrorToast('更新エラー: $e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -106,26 +129,15 @@ class _RecordPageState extends State<RecordPage> {
 
   void _showSuccessToast() {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('保存完了')),
+      const SnackBar(content: Text('更新完了')),
     );
-  }
-
-  void _resetForm() {
-    setState(() {
-      _title = '';
-      _detail = null;
-      _startAge = null;
-      _endAge = null;
-      _imagePaths.clear();
-      _status = MemoryStatus.disposed;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('記録'),
+        title: const Text('思い出を編集'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -155,8 +167,8 @@ class _RecordPageState extends State<RecordPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _isLoading ? null : _saveMemory,
-                child: _isLoading ? const Text('保存中...') : const Text('保存'),
+                onPressed: _isLoading ? null : _updateMemory,
+                child: _isLoading ? const Text('更新中...') : const Text('更新'),
               ),
             ),
           ],
