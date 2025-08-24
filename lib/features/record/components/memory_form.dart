@@ -32,24 +32,24 @@ class MemoryForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: TextEditingController(text: title),
+        TextFormField(
+          initialValue: title,
           decoration: const InputDecoration(labelText: 'タイトル'),
           onChanged: onTitleChanged,
         ),
-        TextField(
-          controller: TextEditingController(text: detail ?? ''),
+        TextFormField(
+          initialValue: detail ?? '',
           decoration: const InputDecoration(labelText: '詳細'),
           onChanged: onDetailChanged,
         ),
-        TextField(
-          controller: TextEditingController(text: startAge?.toString() ?? ''),
+        TextFormField(
+          initialValue: startAge?.toString() ?? '',
           decoration: const InputDecoration(labelText: '開始年齢'),
           keyboardType: TextInputType.number,
           onChanged: onStartAgeChanged,
         ),
-        TextField(
-          controller: TextEditingController(text: endAge?.toString() ?? ''),
+        TextFormField(
+          initialValue: endAge?.toString() ?? '',
           decoration: const InputDecoration(labelText: '終了年齢'),
           keyboardType: TextInputType.number,
           onChanged: onEndAgeChanged,
