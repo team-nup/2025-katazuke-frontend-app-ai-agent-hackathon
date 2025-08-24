@@ -21,7 +21,7 @@ class MemoryList extends StatefulWidget {
 
 class _MemoryListState extends State<MemoryList> {
   int _currentPage = 1;
-  static const int _itemsPerPage = 2;
+  static const int _itemsPerPage = 10;
 
   int get _totalPages => widget.memories.isEmpty
       ? 1

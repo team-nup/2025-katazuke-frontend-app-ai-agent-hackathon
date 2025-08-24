@@ -18,11 +18,13 @@ class Pagination extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: _buildPageButtons(),
+      child: Center(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: _buildPageButtons(),
+          ),
         ),
       ),
     );
