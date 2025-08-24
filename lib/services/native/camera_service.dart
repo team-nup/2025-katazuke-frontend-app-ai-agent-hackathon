@@ -31,6 +31,25 @@ class CameraService {
     }
   }
 
+  Future<String?> pickFromGallery() async {
+    try {
+      final XFile? picture = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+      );
+      
+      if (picture == null) {
+        return null;
+      }
+      
+      final String localPath = await _saveToLocalStorage(picture);
+      return localPath;
+    } catch (e) {
+      debugPrint('Error picking from gallery: $e');
+      rethrow;
+    }
+  }
+
   Future<String> _saveToLocalStorage(XFile picture) async {
     try {
       final Directory appDir = await getApplicationDocumentsDirectory();

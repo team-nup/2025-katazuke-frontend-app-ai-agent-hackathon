@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '../../../core/models/shared/memory.dart';
 import '../../../core/models/shared/memory_status.dart';
 import '../../../core/database/repositories/memory_repository.dart';
-import '../../../native/camera_service.dart';
 import '../components/memory_form.dart';
 import '../components/photo_section.dart';
 import '../utils/memory_validator.dart';
+import '../utils/image_picker_helper.dart';
 
 class RecordEditPage extends StatefulWidget {
   final Memory memory;
@@ -29,7 +29,6 @@ class _RecordEditPageState extends State<RecordEditPage> {
   late MemoryStatus _status;
   
   // UI state
-  final CameraService _cameraService = CameraService();
   bool _isLoading = false;
 
   @override
@@ -50,21 +49,19 @@ class _RecordEditPageState extends State<RecordEditPage> {
   }
 
   Future<void> _addPhoto() async {
-    try {
-      final String? imagePath = await _cameraService.takePicture();
-      if (imagePath != null) {
-        setState(() {
-          _imagePaths.add(imagePath);
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('写真追加: ${_imagePaths.length}枚')),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('エラー: $e')),
-      );
-    }
+    await ImagePickerHelper.addPhotoFromCamera(
+      context: context,
+      imagePaths: _imagePaths,
+      onUpdate: () => setState(() {}),
+    );
+  }
+
+  Future<void> _pickFromGallery() async {
+    await ImagePickerHelper.pickFromGallery(
+      context: context,
+      imagePaths: _imagePaths,
+      onUpdate: () => setState(() {}),
+    );
   }
 
   Future<void> _updateMemory() async {
@@ -162,6 +159,7 @@ class _RecordEditPageState extends State<RecordEditPage> {
             PhotoSection(
               imagePaths: _imagePaths,
               onAddPhoto: _addPhoto,
+              onPickFromGallery: _pickFromGallery,
               onRemovePhoto: (index) {
                 setState(() {
                   _imagePaths.removeAt(index);

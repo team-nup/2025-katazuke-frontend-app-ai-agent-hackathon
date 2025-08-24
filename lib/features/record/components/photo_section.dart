@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class PhotoSection extends StatelessWidget {
   final List<String> imagePaths;
   final VoidCallback onAddPhoto;
+  final VoidCallback? onPickFromGallery;
   final Function(int)? onRemovePhoto;
 
   const PhotoSection({
     super.key,
     required this.imagePaths,
     required this.onAddPhoto,
+    this.onPickFromGallery,
     this.onRemovePhoto,
   });
 
@@ -21,9 +23,30 @@ class PhotoSection extends StatelessWidget {
         const SizedBox(height: 16),
         Text('写真: ${imagePaths.length}枚'),
         const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: onAddPhoto,
-          child: const Text('写真追加'),
+        Row(
+          children: [
+            Expanded(
+              child: ElevatedButton.icon(
+                onPressed: onAddPhoto,
+                icon: const Icon(Icons.camera_alt),
+                label: const Text('カメラ'),
+              ),
+            ),
+            if (onPickFromGallery != null) ...[
+              const SizedBox(width: 8),
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: onPickFromGallery,
+                  icon: const Icon(Icons.photo_library),
+                  label: const Text('ギャラリー'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade100,
+                    foregroundColor: Colors.grey.shade700,
+                  ),
+                ),
+              ),
+            ],
+          ],
         ),
         if (imagePaths.isNotEmpty) ...[
           const SizedBox(height: 16),
