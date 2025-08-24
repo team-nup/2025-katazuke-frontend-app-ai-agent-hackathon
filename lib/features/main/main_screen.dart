@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okataduke/features/assessment/assessment_page.dart';
 import 'package:okataduke/features/home/home_page.dart';
 import 'package:okataduke/features/memory/memory_page.dart';
+import 'package:okataduke/features/record/record_page.dart';
 import 'package:okataduke/features/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = [
     const HomePage(),
     const MemoryPage(),
+    const RecordPage(),
     const AssessmentPage(),
     const SettingPage(),
   ];
@@ -43,6 +45,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.flag),
             label: '思い出',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.flag),
+            label: '記録',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
