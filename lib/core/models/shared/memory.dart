@@ -20,7 +20,7 @@ class Memory {
     this.startAge,
     this.endAge,
     this.imagePaths,
-    this.status = MemoryStatus.keeping,
+    this.status = MemoryStatus.disposed,
     this.disposedAt,
     required this.insertedAt,
     required this.updatedAt,
@@ -48,11 +48,11 @@ class Memory {
       detail: map['detail'],
       startAge: map['start_age'],
       endAge: map['end_age'],
-      imagePaths: map['image_paths'] != null 
+      imagePaths: map['image_paths'] != null
           ? List<String>.from(jsonDecode(map['image_paths']))
           : null,
       status: MemoryStatus.values.byName(map['status']),
-      disposedAt: map['disposed_at'] != null 
+      disposedAt: map['disposed_at'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['disposed_at'])
           : null,
       insertedAt: DateTime.fromMillisecondsSinceEpoch(map['inserted_at']),
