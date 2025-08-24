@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/shared/memory.dart';
-import '../../../sub_page/memory_detail_page.dart';
+import '../sub_page/memory_detail/memory_detail_page.dart';
 
 class MemoryItem extends StatelessWidget {
   final Memory memory;

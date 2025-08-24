@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/shared/memory.dart';
-import '../../memory_item/ui/memory_item.dart';
-import '../../pagination/ui/pagination.dart';
+import 'memory_item.dart';
+import 'pagination.dart';
 
 class MemoryList extends StatefulWidget {
   final List<Memory> memories;
