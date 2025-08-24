@@ -7,12 +7,14 @@ class MemoryList extends StatefulWidget {
   final List<Memory> memories;
   final bool isLoading;
   final VoidCallback? onRefresh;
+  final VoidCallback? onMemoryTap;
 
   const MemoryList({
     super.key,
     required this.memories,
     required this.isLoading,
     this.onRefresh,
+    this.onMemoryTap,
   });
 
   @override
@@ -83,7 +85,10 @@ class _MemoryListState extends State<MemoryList> {
             onPageChanged: _onPageChanged,
           );
         }
-        return MemoryItem(memory: _currentPageMemories[index]);
+        return MemoryItem(
+          memory: _currentPageMemories[index],
+          onTap: widget.onMemoryTap,
+        );
       },
     );
   }

@@ -5,10 +5,12 @@ import '../../detail/memory_detail_page.dart';
 
 class MemoryItem extends StatelessWidget {
   final Memory memory;
+  final VoidCallback? onTap;
 
   const MemoryItem({
     super.key,
     required this.memory,
+    this.onTap,
   });
 
   @override
@@ -16,12 +18,16 @@ class MemoryItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
+        onTap: () async {
+          final hasBeenUpdated = await Navigator.of(context).push<bool>(
             MaterialPageRoute(
               builder: (context) => MemoryDetailPage(memory: memory),
             ),
           );
+          // 更新があった場合のみコールバックを実行
+          if (hasBeenUpdated == true) {
+            onTap?.call();
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -150,6 +150,11 @@ class _RecordCreatePageState extends State<RecordCreatePage> {
             PhotoSection(
               imagePaths: _imagePaths,
               onAddPhoto: _addPhoto,
+              onRemovePhoto: (index) {
+                setState(() {
+                  _imagePaths.removeAt(index);
+                });
+              },
             ),
             const SizedBox(height: 24),
             SizedBox(

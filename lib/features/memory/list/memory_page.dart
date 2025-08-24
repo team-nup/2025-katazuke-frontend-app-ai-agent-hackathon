@@ -21,6 +21,10 @@ class _MemoryPageState extends State<MemoryPage> {
     _loadMemories();
   }
 
+  void _onMemoryUpdated() {
+    _loadMemories();
+  }
+
   Future<void> _loadMemories() async {
     setState(() => _isLoading = true);
 
@@ -54,6 +58,7 @@ class _MemoryPageState extends State<MemoryPage> {
         memories: _memories,
         isLoading: _isLoading,
         onRefresh: _loadMemories,
+        onMemoryTap: _onMemoryUpdated,
       ),
     );
   }
