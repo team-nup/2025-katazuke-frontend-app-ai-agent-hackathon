@@ -125,4 +125,36 @@ class MemoryRepository {
       rethrow;
     }
   }
+
+  static Future<Map<String, int>> getStatistics() async {
+    try {
+      final db = await DatabaseHelper.database;
+      final List<Map<String, dynamic>> result = await db.rawQuery('''
+        SELECT 
+          status,
+          COUNT(*) as count
+        FROM ${DatabaseMigration.memoriesTable}
+        GROUP BY status
+      ''');
+
+      final statistics = <String, int>{
+        'total': 0,
+        'keeping': 0,
+        'considering': 0,
+        'disposed': 0,
+      };
+
+      for (final row in result) {
+        final status = row['status'] as String;
+        final count = row['count'] as int;
+        statistics[status] = count;
+        statistics['total'] = statistics['total']! + count;
+      }
+
+      return statistics;
+    } catch (e) {
+      debugPrint('Error getting memory statistics: $e');
+      rethrow;
+    }
+  }
 }
