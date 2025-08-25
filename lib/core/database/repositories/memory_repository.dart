@@ -126,6 +126,15 @@ class MemoryRepository {
     }
   }
 
+  static Future<List<Memory>> getRecentMemories({int limit = 3}) async {
+    try {
+      return await findAll(limit: limit);
+    } catch (e) {
+      debugPrint('Error getting recent memories: $e');
+      rethrow;
+    }
+  }
+
   static Future<Map<String, int>> getStatistics() async {
     try {
       final db = await DatabaseHelper.database;

@@ -13,17 +13,17 @@ class CameraService {
         source: ImageSource.camera,
         imageQuality: 85,
       );
-      
+
       if (picture == null) {
         return null;
       }
-      
+
       final String localPath = await _saveToLocalStorage(picture);
-      
+
       if (saveToGallery) {
         await _saveToGallery(picture);
       }
-      
+
       return localPath;
     } catch (e) {
       debugPrint('Error taking picture: $e');
@@ -37,11 +37,11 @@ class CameraService {
         source: ImageSource.gallery,
         imageQuality: 85,
       );
-      
+
       if (picture == null) {
         return null;
       }
-      
+
       final String localPath = await _saveToLocalStorage(picture);
       return localPath;
     } catch (e) {
@@ -54,18 +54,18 @@ class CameraService {
     try {
       final Directory appDir = await getApplicationDocumentsDirectory();
       final String memoriesDir = path.join(appDir.path, 'okataduke_memories');
-      
+
       final Directory memoriesDirObj = Directory(memoriesDir);
       if (!await memoriesDirObj.exists()) {
         await memoriesDirObj.create(recursive: true);
       }
-      
+
       final String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
       final String fileName = 'memory_$timestamp.jpg';
       final String localPath = path.join(memoriesDir, fileName);
-      
+
       final File localFile = await File(picture.path).copy(localPath);
-      
+
       debugPrint('Image saved to local storage: $localPath');
       return localFile.path;
     } catch (e) {

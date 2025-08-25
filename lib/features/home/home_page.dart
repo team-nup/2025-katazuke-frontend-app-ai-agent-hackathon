@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/database/repositories/memory_repository.dart';
+import '../../core/models/shared/memory.dart';
+import '../memory/detail/memory_detail_page.dart';
+import 'components/recent_memories_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Map<String, int> _statistics = {};
+  List<Memory> _recentMemories = [];
   bool _isLoading = true;
 
   @override
@@ -23,8 +27,10 @@ class _HomePageState extends State<HomePage> {
 
     try {
       final statistics = await MemoryRepository.getStatistics();
+      final recentMemories = await MemoryRepository.getRecentMemories();
       setState(() {
         _statistics = statistics;
+        _recentMemories = recentMemories;
         _isLoading = false;
       });
     } catch (e) {
@@ -57,6 +63,21 @@ class _HomePageState extends State<HomePage> {
               Text('保管中: ${_statistics['keeping'] ?? 0}件'),
               Text('検討中: ${_statistics['considering'] ?? 0}件'),
               Text('処分済み: ${_statistics['disposed'] ?? 0}件'),
+              const SizedBox(height: 32),
+              RecentMemoriesSection(
+                memories: _recentMemories,
+                onMemoryTap: (memory) async {
+                  final result = await Navigator.of(context).push<bool>(
+                    MaterialPageRoute(
+                      builder: (context) => MemoryDetailPage(memory: memory),
+                    ),
+                  );
+
+                  if (result == true) {
+                    _loadStatistics();
+                  }
+                },
+              ),
             ],
           ],
         ),
