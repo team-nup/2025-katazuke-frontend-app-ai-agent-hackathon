@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../core/models/shared/memory.dart';
-import '../../../core/models/shared/memory_status.dart';
-import '../../../core/database/repositories/memory_repository.dart';
+import '../../../../core/models/shared/memory.dart';
+import '../../../../core/models/shared/memory_status.dart';
+import '../../../../core/database/repositories/memory_repository.dart';
 import 'memory_validator.dart';
 import 'memory_factory.dart';
 

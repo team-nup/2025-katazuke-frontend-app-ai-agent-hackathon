@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../core/models/shared/memory.dart';
 import '../../../core/database/repositories/memory_repository.dart';
-import '../../record/edit/record_edit_page.dart';
-import 'components/memory_info.dart';
-import 'components/memory_images.dart';
-import 'components/delete_confirmation_dialog.dart';
+import '../../record/containers/record_edit_container.dart';
+import '../components/detail/memory_info.dart';
+import '../components/detail/memory_images.dart';
+import '../components/detail/delete_confirmation_dialog.dart';
 
 class MemoryDetailPage extends StatefulWidget {
   final Memory memory;
@@ -31,7 +31,7 @@ class _MemoryDetailPageState extends State<MemoryDetailPage> {
   Future<void> _navigateToEdit() async {
     final updatedMemory = await Navigator.of(context).push<Memory>(
       MaterialPageRoute(
-        builder: (context) => RecordEditPage(memory: _currentMemory),
+        builder: (context) => RecordEditContainer(memory: _currentMemory),
       ),
     );
 

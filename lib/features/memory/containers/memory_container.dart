@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'components/memory_list.dart';
-import '../../../core/database/repositories/memory_repository.dart';
 import '../../../core/models/shared/memory.dart';
+import '../../../core/database/repositories/memory_repository.dart';
+import '../pages/memory_page.dart';
 
-class MemoryPage extends StatefulWidget {
-  const MemoryPage({super.key});
+class MemoryContainer extends StatefulWidget {
+  const MemoryContainer({super.key});
 
   @override
-  State<MemoryPage> createState() => _MemoryPageState();
+  State<MemoryContainer> createState() => _MemoryContainerState();
 }
 
-class _MemoryPageState extends State<MemoryPage> {
+class _MemoryContainerState extends State<MemoryContainer> {
   List<Memory> _memories = [];
   bool _isLoading = true;
   int _totalCount = 0;
@@ -18,10 +18,6 @@ class _MemoryPageState extends State<MemoryPage> {
   @override
   void initState() {
     super.initState();
-    _loadMemories();
-  }
-
-  void _onMemoryUpdated() {
     _loadMemories();
   }
 
@@ -47,19 +43,18 @@ class _MemoryPageState extends State<MemoryPage> {
     }
   }
 
+  void _onMemoryUpdated() {
+    _loadMemories();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('思い出 ($_totalCount件)'),
-        backgroundColor: Colors.teal.shade50,
-      ),
-      body: MemoryList(
-        memories: _memories,
-        isLoading: _isLoading,
-        onRefresh: _loadMemories,
-        onMemoryTap: _onMemoryUpdated,
-      ),
+    return MemoryPage(
+      memories: _memories,
+      isLoading: _isLoading,
+      totalCount: _totalCount,
+      onRefresh: _loadMemories,
+      onMemoryUpdated: _onMemoryUpdated,
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../services/native/camera_service.dart';
+import '../../../../services/native/camera_service.dart';
 
 class ImagePickerHelper {
   static final CameraService _cameraService = CameraService();

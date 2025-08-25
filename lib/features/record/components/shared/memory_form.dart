@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/shared/memory_status.dart';
+import '../../../../core/models/shared/memory_status.dart';
 
 class MemoryForm extends StatelessWidget {
   final String title;

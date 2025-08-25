@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/features/assessment/assessment_page.dart';
-import 'package:okataduke/features/home/home_page.dart';
-import 'package:okataduke/features/memory/list/memory_page.dart';
-import 'package:okataduke/features/record/create/record_create_page.dart';
+import 'package:okataduke/features/home/containers/home_container.dart';
+import 'package:okataduke/features/memory/containers/memory_container.dart';
+import 'package:okataduke/features/record/containers/record_create_container.dart';
 import 'package:okataduke/features/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,9 +16,9 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const HomePage(),
-    const MemoryPage(),
-    const RecordCreatePage(),
+    const HomeContainer(),
+    const MemoryContainer(),
+    const RecordCreateContainer(),
     const AssessmentPage(),
     const SettingPage(),
   ];

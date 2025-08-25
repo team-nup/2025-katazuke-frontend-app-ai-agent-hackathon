@@ -302,3 +302,75 @@
 - カード型デザインで統一
 - 適切な余白とパディング
 - タッチフレンドリーなボタンサイズ
+
+---
+
+# アーキテクチャ設計
+
+## フォルダ構造とレイヤー分離
+
+### 基本原則
+
+- **Page層**: UI描画専用（StatelessWidget推奨）
+- **Container層**: 状態管理 + ビジネスロジック（StatefulWidget）
+- **Components**: 再利用可能UI部品
+- **Utils**: 純粋関数・ヘルパー
+
+### フォルダ構造
+
+```
+features/
+├── [feature_name]/
+│   ├── containers/
+│   │   ├── [page]_container.dart     # 状態管理 + ビジネスロジック
+│   │   └── ...
+│   ├── pages/
+│   │   ├── [page]_page.dart          # UI描画のみ
+│   │   └── ...
+│   ├── components/
+│   │   ├── shared/                   # 機能内で共通使用
+│   │   │   ├── component1.dart
+│   │   │   └── component2.dart
+│   │   ├── [page_name]/              # 特定ページでのみ使用
+│   │   │   └── page_specific_widget.dart
+│   │   └── ...
+│   └── utils/
+│       ├── shared/                   # 機能内で共通使用
+│       │   ├── service.dart
+│       │   ├── validator.dart
+│       │   └── helper.dart
+│       ├── [page_name]/              # 特定ページでのみ使用
+│       │   └── page_specific_helper.dart
+│       └── ...
+```
+
+### レイヤー責務
+
+#### Container層
+- StatefulWidget として状態管理
+- Repository アクセス
+- バリデーション・データ変換
+- ナビゲーション制御
+- Page に props (data + callbacks) を渡す
+
+#### Page層
+- Widget tree の構築
+- レイアウト・デザイン
+- Container から渡された data/callback の表示
+
+#### Components層
+- 再利用可能UI部品
+- `shared/`: 機能内複数ページで使用
+- `[page_name]/`: 特定ページでのみ使用
+
+#### Utils層
+- 純粋関数・ヘルパー
+- `shared/`: 機能内複数ページで使用
+- `[page_name]/`: 特定ページでのみ使用
+
+### 利点
+
+- **テスタビリティ向上**: ロジックとUIの分離
+- **再利用性向上**: Component の適切な分類
+- **保守性向上**: 責務の明確な分離
+- **チーム開発効率**: 構造の統一化

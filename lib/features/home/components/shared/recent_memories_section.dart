@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/models/shared/memory.dart';
-import '../utils/date_formatter.dart';
+import '../../../../core/models/shared/memory.dart';
+import '../../utils/shared/date_formatter.dart';
 
 class RecentMemoriesSection extends StatelessWidget {
   final List<Memory> memories;

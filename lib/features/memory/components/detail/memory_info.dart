@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/shared/memory.dart';
-import '../utils/memory_formatter.dart';
+import '../../utils/detail/memory_formatter.dart';
 
 class MemoryInfo extends StatelessWidget {
   final Memory memory;
