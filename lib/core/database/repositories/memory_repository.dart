@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -99,17 +100,41 @@ class MemoryRepository {
   static Future<int> delete(String id) async {
     try {
       final db = await DatabaseHelper.database;
+      
+      // 削除前に画像パスを取得
+      final memory = await findById(id);
+      
+      // DBから削除
       final count = await db.delete(
         DatabaseMigration.memoriesTable,
         where: 'id = ?',
         whereArgs: [id],
       );
       
+      // 画像ファイルも削除
+      if (memory?.imagePaths != null) {
+        await _deleteImageFiles(memory!.imagePaths!);
+      }
+      
       debugPrint('Memory deleted: $id');
       return count;
     } catch (e) {
       debugPrint('Error deleting memory: $e');
       rethrow;
+    }
+  }
+
+  static Future<void> _deleteImageFiles(List<String> imagePaths) async {
+    for (final imagePath in imagePaths) {
+      try {
+        final file = File(imagePath);
+        if (await file.exists()) {
+          await file.delete();
+          debugPrint('Image file deleted: $imagePath');
+        }
+      } catch (e) {
+        debugPrint('Error deleting image file $imagePath: $e');
+      }
     }
   }
 

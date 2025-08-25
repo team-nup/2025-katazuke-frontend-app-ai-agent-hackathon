@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import '../../../core/models/shared/memory.dart';
 import '../../../core/models/shared/memory_status.dart';
-import '../../../core/database/repositories/memory_repository.dart';
 import '../components/memory_form.dart';
 import '../components/photo_section.dart';
-import '../utils/memory_validator.dart';
 import '../utils/image_picker_helper.dart';
+import '../utils/memory_service.dart';
+import '../utils/toast_helper.dart';
 
 class RecordEditPage extends StatefulWidget {
   final Memory memory;
-  
+
   const RecordEditPage({
     super.key,
     required this.memory,
@@ -27,7 +27,10 @@ class _RecordEditPageState extends State<RecordEditPage> {
   late int? _endAge;
   late List<String> _imagePaths;
   late MemoryStatus _status;
-  
+
+  // 削除対象の画像パスを保持
+  List<String> _imagesToDelete = [];
+
   // UI state
   bool _isLoading = false;
 
@@ -67,68 +70,39 @@ class _RecordEditPageState extends State<RecordEditPage> {
   Future<void> _updateMemory() async {
     if (_isLoading) return;
 
-    // Validation
-    final validationError = MemoryValidator.validateAll(
-      title: _title,
-      detail: _detail,
-      startAge: _startAge,
-      endAge: _endAge,
-    );
-    
-    if (validationError != null) {
-      _showErrorToast(validationError);
-      return;
-    }
-
     setState(() {
       _isLoading = true;
     });
 
     try {
-      // Update Memory using copyWith
-      final updatedMemory = widget.memory.copyWith(
-        title: _title.trim(),
-        detail: _detail?.isEmpty == true ? null : _detail?.trim(),
+      final updatedMemory = await MemoryService.updateMemory(
+        originalMemory: widget.memory,
+        title: _title,
+        detail: _detail,
         startAge: _startAge,
         endAge: _endAge,
-        imagePaths: _imagePaths.isEmpty ? null : _imagePaths,
+        imagePaths: _imagePaths,
+        imagesToDelete: _imagesToDelete,
         status: _status,
-        disposedAt: _status == MemoryStatus.disposed 
-            ? (widget.memory.disposedAt ?? DateTime.now()) 
-            : (_status != MemoryStatus.disposed ? null : widget.memory.disposedAt),
-        updatedAt: DateTime.now(),
       );
 
-      // Save to database
-      await MemoryRepository.update(updatedMemory);
-
-      // Show success message
-      _showSuccessToast();
-      
-      // Navigate back
       if (mounted) {
+        ToastHelper.showUpdateSuccess(context);
         Navigator.of(context).pop(updatedMemory);
       }
     } catch (e) {
-      _showErrorToast('更新エラー: $e');
+      if (mounted) {
+        ToastHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
-  void _showErrorToast(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('エラー: $message')),
-    );
-  }
-
-  void _showSuccessToast() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('更新完了')),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -161,8 +135,13 @@ class _RecordEditPageState extends State<RecordEditPage> {
               onAddPhoto: _addPhoto,
               onPickFromGallery: _pickFromGallery,
               onRemovePhoto: (index) {
+                final imagePath = _imagePaths[index];
                 setState(() {
                   _imagePaths.removeAt(index);
+                  // 元の画像リストに含まれていた場合のみ削除対象に追加
+                  if (widget.memory.imagePaths?.contains(imagePath) == true) {
+                    _imagesToDelete.add(imagePath);
+                  }
                 });
               },
             ),

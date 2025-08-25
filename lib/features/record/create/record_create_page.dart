@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../core/models/shared/memory_status.dart';
-import '../../../core/database/repositories/memory_repository.dart';
 import '../components/memory_form.dart';
 import '../components/photo_section.dart';
-import '../utils/memory_validator.dart';
 import '../utils/image_picker_helper.dart';
-import 'utils/memory_factory.dart';
+import '../utils/memory_service.dart';
+import '../utils/toast_helper.dart';
 
 class RecordCreatePage extends StatefulWidget {
   const RecordCreatePage({super.key});
@@ -50,26 +49,12 @@ class _RecordCreatePageState extends State<RecordCreatePage> {
   Future<void> _saveMemory() async {
     if (_isLoading) return;
 
-    // Validation
-    final validationError = MemoryValidator.validateAll(
-      title: _title,
-      detail: _detail,
-      startAge: _startAge,
-      endAge: _endAge,
-    );
-
-    if (validationError != null) {
-      _showErrorToast(validationError);
-      return;
-    }
-
     setState(() {
       _isLoading = true;
     });
 
     try {
-      // Create Memory using factory
-      final memory = MemoryFactory.createFromForm(
+      await MemoryService.createMemory(
         title: _title,
         detail: _detail,
         startAge: _startAge,
@@ -78,34 +63,23 @@ class _RecordCreatePageState extends State<RecordCreatePage> {
         status: _status,
       );
 
-      // Save to database
-      await MemoryRepository.insert(memory);
-
-      // Show success message
-      _showSuccessToast();
-
-      // Reset form
-      _resetForm();
+      if (mounted) {
+        ToastHelper.showCreateSuccess(context);
+        _resetForm();
+      }
     } catch (e) {
-      _showErrorToast('保存エラー: $e');
+      if (mounted) {
+        ToastHelper.showError(context, e.toString().replaceFirst('Exception: ', ''));
+      }
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
-  void _showErrorToast(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('エラー: $message')),
-    );
-  }
-
-  void _showSuccessToast() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('保存完了')),
-    );
-  }
 
   void _resetForm() {
     setState(() {

@@ -58,6 +58,7 @@ class PhotoSection extends StatelessWidget {
 
   Widget _buildImageGrid(BuildContext context) {
     return GridView.builder(
+      key: ValueKey(imagePaths.length),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -74,7 +75,7 @@ class PhotoSection extends StatelessWidget {
 
   Widget _buildImageItem(BuildContext context, int index) {
     final imagePath = imagePaths[index];
-    
+
     return Stack(
       children: [
         Container(
@@ -102,8 +103,15 @@ class PhotoSection extends StatelessWidget {
           Positioned(
             top: 4,
             right: 4,
-            child: GestureDetector(
-              onTap: () => onRemovePhoto!(index),
+            child: InkWell(
+              onTap: () async {
+                try {
+                  await onRemovePhoto!(index);
+                } catch (e) {
+                  debugPrint('Error in onRemovePhoto callback: $e');
+                }
+              },
+              borderRadius: BorderRadius.circular(12),
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.8),
