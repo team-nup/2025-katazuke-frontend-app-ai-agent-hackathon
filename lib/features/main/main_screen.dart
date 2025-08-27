@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:okataduke/features/assessment/assessment_page.dart';
+import 'package:okataduke/features/value_search/value_search_page.dart';
 import 'package:okataduke/features/home/containers/home_container.dart';
 import 'package:okataduke/features/memory/containers/memory_container.dart';
 import 'package:okataduke/features/record/containers/record_create_container.dart';
@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
     const HomeContainer(),
     const MemoryContainer(),
     const RecordCreateContainer(),
-    const AssessmentPage(),
+    const ValueSearchPage(),
     const SettingPage(),
   ];
 
