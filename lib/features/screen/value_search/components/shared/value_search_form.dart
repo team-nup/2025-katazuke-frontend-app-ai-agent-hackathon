@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import '../../../../../core/models/DB/memory_status.dart';
+
+class ValueSearchForm extends StatelessWidget {
+  final String title;
+  final String? detail;
+  final ItemKeepStatus status;
+  final Function(String) onTitleChanged;
+  final Function(String) onDetailChanged;
+  final Function(ItemKeepStatus) onStatusChanged;
+
+  const ValueSearchForm({
+    super.key,
+    required this.title,
+    this.detail,
+    required this.status,
+    required this.onTitleChanged,
+    required this.onDetailChanged,
+    required this.onStatusChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          initialValue: title,
+          decoration: const InputDecoration(labelText: 'アイテム名'),
+          onChanged: onTitleChanged,
+        ),
+        TextFormField(
+          initialValue: detail ?? '',
+          decoration: const InputDecoration(labelText: '詳細・メモ'),
+          onChanged: onDetailChanged,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'ステータス',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 8),
+        _buildStatusRadios(),
+      ],
+    );
+  }
+
+  Widget _buildStatusRadios() {
+    return Column(
+      children: [
+        RadioListTile<ItemKeepStatus>(
+          title: const Text('保管中'),
+          subtitle: const Text('まだ手元にあるアイテム'),
+          value: ItemKeepStatus.keeping,
+          groupValue: status,
+          onChanged: (ItemKeepStatus? value) {
+            if (value != null) {
+              onStatusChanged(value);
+            }
+          },
+        ),
+        RadioListTile<ItemKeepStatus>(
+          title: const Text('検討中'),
+          subtitle: const Text('処分を検討しているアイテム'),
+          value: ItemKeepStatus.considering,
+          groupValue: status,
+          onChanged: (ItemKeepStatus? value) {
+            if (value != null) {
+              onStatusChanged(value);
+            }
+          },
+        ),
+        RadioListTile<ItemKeepStatus>(
+          title: const Text('処分済み'),
+          subtitle: const Text('既に手放したアイテム（処分日を自動記録）'),
+          value: ItemKeepStatus.disposed,
+          groupValue: status,
+          onChanged: (ItemKeepStatus? value) {
+            if (value != null) {
+              onStatusChanged(value);
+            }
+          },
+        ),
+      ],
+    );
+  }
+}

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
-import '../../models/shared/memory.dart';
+import '../../models/DB/memory.dart';
 import '../database_helper.dart';
 import '../database_migration.dart';
 
@@ -13,19 +13,19 @@ class MemoryRepository {
     try {
       final db = await DatabaseHelper.database;
       final now = DateTime.now();
-      
+
       final memoryWithId = memory.copyWith(
         id: memory.id.isEmpty ? _uuid.v4() : memory.id,
         insertedAt: now,
         updatedAt: now,
       );
-      
+
       await db.insert(
         DatabaseMigration.memoriesTable,
         memoryWithId.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      
+
       debugPrint('Memory inserted with ID: ${memoryWithId.id}');
       return memoryWithId.id;
     } catch (e) {
@@ -88,7 +88,7 @@ class MemoryRepository {
         where: 'id = ?',
         whereArgs: [memory.id],
       );
-      
+
       debugPrint('Memory updated: ${memory.id}');
       return count;
     } catch (e) {
@@ -100,22 +100,22 @@ class MemoryRepository {
   static Future<int> delete(String id) async {
     try {
       final db = await DatabaseHelper.database;
-      
+
       // 削除前に画像パスを取得
       final memory = await findById(id);
-      
+
       // DBから削除
       final count = await db.delete(
         DatabaseMigration.memoriesTable,
         where: 'id = ?',
         whereArgs: [id],
       );
-      
+
       // 画像ファイルも削除
       if (memory?.imagePaths != null) {
         await _deleteImageFiles(memory!.imagePaths!);
       }
-      
+
       debugPrint('Memory deleted: $id');
       return count;
     } catch (e) {
