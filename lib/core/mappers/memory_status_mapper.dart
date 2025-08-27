@@ -1,22 +1,22 @@
-import '../models/shared/memory_status.dart';
+import '../models/DB/memory_status.dart';
 
 class MemoryStatusMapper {
-  static String toDisplayString(MemoryStatus status) {
+  static String toDisplayString(ItemKeepStatus status) {
     switch (status) {
-      case MemoryStatus.keeping:
+      case ItemKeepStatus.keeping:
         return '保管中';
-      case MemoryStatus.disposed:
+      case ItemKeepStatus.disposed:
         return '処分済み';
-      case MemoryStatus.considering:
+      case ItemKeepStatus.considering:
         return '検討中';
     }
   }
 
-  static String toDbString(MemoryStatus status) {
+  static String toDbString(ItemKeepStatus status) {
     return status.name;
   }
 
-  static MemoryStatus fromDbString(String value) {
-    return MemoryStatus.values.byName(value);
+  static ItemKeepStatus fromDbString(String value) {
+    return ItemKeepStatus.values.byName(value);
   }
 }

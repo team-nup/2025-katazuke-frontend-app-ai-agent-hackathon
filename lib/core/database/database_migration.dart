@@ -3,11 +3,13 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseMigration {
   static const String memoriesTable = 'memories';
+  static const String valueSearchTable = 'value_searches';
 
   static Future<void> onCreate(Database db, int version) async {
     debugPrint('Creating database tables...');
     
     await _createMemoriesTable(db);
+    await _createValueSearchTable(db);
     
     debugPrint('Database tables created successfully');
   }
@@ -30,6 +32,26 @@ class DatabaseMigration {
         end_age INTEGER,
         image_paths TEXT,
         status TEXT DEFAULT 'keeping',
+        disposed_at INTEGER,
+        inserted_at INTEGER NOT NULL,
+        updated_at INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  static Future<void> _createValueSearchTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE $valueSearchTable (
+        id TEXT PRIMARY KEY,
+        title TEXT NOT NULL,
+        detail TEXT,
+        image_paths TEXT NOT NULL,
+        value INTEGER NOT NULL,
+        status TEXT DEFAULT 'keeping',
+        detected_product_name TEXT NOT NULL,
+        ai_confidence_score INTEGER NOT NULL,
+        min_price INTEGER,
+        max_price INTEGER,
         disposed_at INTEGER,
         inserted_at INTEGER NOT NULL,
         updated_at INTEGER NOT NULL
