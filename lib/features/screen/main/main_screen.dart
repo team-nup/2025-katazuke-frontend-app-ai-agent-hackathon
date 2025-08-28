@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okataduke/features/screen/value_search/containers/value_search_create_container.dart';
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
 import 'package:okataduke/features/screen/memory/containers/memory_container.dart';
-import 'package:okataduke/features/screen/record/containers/record_create_container.dart';
+import 'package:okataduke/features/screen/memory_record/containers/record_create_container.dart';
 import 'package:okataduke/features/screen/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {

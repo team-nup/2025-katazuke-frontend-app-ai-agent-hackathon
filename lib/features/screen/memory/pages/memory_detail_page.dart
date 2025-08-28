@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/database/repositories/memory_repository.dart';
-import '../../record/containers/record_edit_container.dart';
+import '../../memory_record/containers/record_edit_container.dart';
 import '../components/detail/memory_info.dart';
 import '../components/detail/memory_images.dart';
 import '../components/detail/delete_confirmation_dialog.dart';
