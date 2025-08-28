@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/database/repositories/memory_repository.dart';
-import '../../memory_view/pages/memory_detail_page.dart';
+import '../../memory_view/containers/memory_detail_container.dart';
 import '../pages/home_page.dart';
 
 class HomeContainer extends StatefulWidget {
@@ -47,7 +47,7 @@ class _HomeContainerState extends State<HomeContainer> {
   Future<void> _onMemoryTap(Memory memory) async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => MemoryDetailPage(memory: memory),
+        builder: (context) => MemoryDetailContainer(memory: memory),
       ),
     );
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/database/repositories/memory_repository.dart';
-import '../pages/memory_page.dart';
+import '../pages/memory_list_page.dart';
 
-class MemoryContainer extends StatefulWidget {
-  const MemoryContainer({super.key});
+class MemoryListContainer extends StatefulWidget {
+  const MemoryListContainer({super.key});
 
   @override
-  State<MemoryContainer> createState() => _MemoryContainerState();
+  State<MemoryListContainer> createState() => _MemoryListContainerState();
 }
 
-class _MemoryContainerState extends State<MemoryContainer> {
+class _MemoryListContainerState extends State<MemoryListContainer> {
   List<Memory> _memories = [];
   bool _isLoading = true;
   int _totalCount = 0;
@@ -49,7 +49,7 @@ class _MemoryContainerState extends State<MemoryContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return MemoryPage(
+    return MemoryListPage(
       memories: _memories,
       isLoading: _isLoading,
       totalCount: _totalCount,

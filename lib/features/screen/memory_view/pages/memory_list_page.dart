@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../components/list/memory_list.dart';
 import '../../../../core/models/DB/memory.dart';
 
-class MemoryPage extends StatelessWidget {
+class MemoryListPage extends StatelessWidget {
   final List<Memory> memories;
   final bool isLoading;
   final int totalCount;
   final VoidCallback onRefresh;
   final VoidCallback onMemoryUpdated;
 
-  const MemoryPage({
+  const MemoryListPage({
     super.key,
     required this.memories,
     required this.isLoading,

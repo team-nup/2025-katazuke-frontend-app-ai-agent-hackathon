@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/memory.dart';
-import '../../pages/memory_detail_page.dart';
+import '../../containers/memory_detail_container.dart';
 
 class MemoryItem extends StatelessWidget {
   final Memory memory;
@@ -21,7 +21,7 @@ class MemoryItem extends StatelessWidget {
         onTap: () async {
           final hasBeenUpdated = await Navigator.of(context).push<bool>(
             MaterialPageRoute(
-              builder: (context) => MemoryDetailPage(memory: memory),
+              builder: (context) => MemoryDetailContainer(memory: memory),
             ),
           );
           // 更新があった場合のみコールバックを実行
