@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/database/repositories/memory_repository.dart';
-import '../../memory/pages/memory_detail_page.dart';
+import '../../memory_view/pages/memory_detail_page.dart';
 import '../pages/home_page.dart';
 
 class HomeContainer extends StatefulWidget {
