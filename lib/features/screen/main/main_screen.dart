@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:okataduke/features/screen/item_value_search/containers/value_search_create_container.dart';
+import 'package:okataduke/features/screen/value_search/containers/value_search_create_container.dart';
+import 'package:okataduke/features/screen/value_view/containers/value_list_container.dart';
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
 import 'package:okataduke/features/screen/memory_view/containers/memory_list_container.dart';
 import 'package:okataduke/features/screen/memory_record/containers/record_create_container.dart';
@@ -20,6 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     const MemoryListContainer(),
     const RecordCreateContainer(),
     const ValueSearchCreateContainer(),
+    const ValueListContainer(),
     const SettingPage(),
   ];
 
@@ -53,6 +55,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
             label: '価値検索',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inventory),
+            label: '価値一覧',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
