@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory_status.dart';
 import '../components/shared/memory_form.dart';
-import '../components/shared/photo_section.dart';
+import '../../../components/photo_section.dart';
 
 class RecordCreatePage extends StatelessWidget {
   final String title;

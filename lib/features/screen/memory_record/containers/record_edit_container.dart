@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/models/DB/memory_status.dart';
-import '../pages/record_edit_page.dart';
+import '../pages/memory_record_edit_page.dart';
 import '../utils/shared/image_picker_helper.dart';
 import '../utils/shared/memory_service.dart';
 import '../utils/shared/toast_helper.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:okataduke/features/screen/value_search/containers/value_search_create_container.dart';
+import 'package:okataduke/features/screen/item_value_search/containers/value_search_create_container.dart';
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
-import 'package:okataduke/features/screen/memory/containers/memory_container.dart';
-import 'package:okataduke/features/screen/record/containers/record_create_container.dart';
+import 'package:okataduke/features/screen/memory_view/containers/memory_list_container.dart';
+import 'package:okataduke/features/screen/memory_record/containers/record_create_container.dart';
 import 'package:okataduke/features/screen/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const HomeContainer(),
-    const MemoryContainer(),
+    const MemoryListContainer(),
     const RecordCreateContainer(),
     const ValueSearchCreateContainer(),
     const SettingPage(),
