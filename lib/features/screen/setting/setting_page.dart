@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../components/app_bar.dart';
 
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
@@ -6,9 +7,10 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('設定'),
-        backgroundColor: Colors.teal.shade50,
+      appBar: const AppBarComponent(
+        title: '設定',
+        titleIcon: Icons.settings,
+        showBackButton: true,
       ),
       body: const Center(
         child: Text(

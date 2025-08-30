@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
 import '../components/list/value_list.dart';
+import '../../../components/app_bar.dart';
 
 class ValueListPage extends StatelessWidget {
   final List<ValueSearch> values;
@@ -27,9 +28,9 @@ class ValueListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('価値分析 ($totalCount)'),
-        backgroundColor: Colors.orange.shade50,
+      appBar: AppBarComponent(
+        title: '価値分析 ($totalCount)',
+        titleIcon: Icons.analytics,
       ),
       body: ValueList(
         values: values,

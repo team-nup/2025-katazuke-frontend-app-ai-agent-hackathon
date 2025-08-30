@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import '../../../../../core/models/DB/value_search.dart';
-import '../../../../../core/models/DB/memory_status.dart';
 import '../../../../../core/database/repositories/value_search_repository.dart';
 import 'value_search_validator.dart';
 import '../create/value_search_factory.dart';

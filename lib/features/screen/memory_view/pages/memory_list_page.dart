@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/list/memory_list.dart';
 import '../../../../core/models/DB/memory.dart';
+import '../../../components/app_bar.dart';
 
 class MemoryListPage extends StatelessWidget {
   final List<Memory> memories;
@@ -21,9 +22,9 @@ class MemoryListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('思い出ボックス ($totalCount)'),
-        backgroundColor: Colors.teal.shade50,
+      appBar: AppBarComponent(
+        title: '思い出ボックス ($totalCount)',
+        titleIcon: Icons.inventory,
       ),
       body: MemoryList(
         memories: memories,

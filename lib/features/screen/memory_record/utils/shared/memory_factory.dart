@@ -9,7 +9,7 @@ class MemoryFactory {
     int? startAge,
     int? endAge,
     List<String>? imagePaths,
-    required ItemKeepStatus status,
+    required MemoryStatus status,
   }) {
     final now = DateTime.now();
     return Memory(
@@ -20,7 +20,7 @@ class MemoryFactory {
       endAge: endAge,
       imagePaths: imagePaths?.isEmpty == true ? null : imagePaths,
       status: status,
-      disposedAt: status == ItemKeepStatus.disposed ? now : null,
+      disposedAt: status == MemoryStatus.disposed ? now : null,
       insertedAt: now,
       updatedAt: now,
     );

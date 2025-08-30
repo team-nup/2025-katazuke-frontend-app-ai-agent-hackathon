@@ -25,7 +25,7 @@ class _RecordEditContainerState extends State<RecordEditContainer> {
   late int? _startAge;
   late int? _endAge;
   late List<String> _imagePaths;
-  late ItemKeepStatus _status;
+  late MemoryStatus _status;
 
   // 削除対象の画像パスを保持
   List<String> _imagesToDelete = [];

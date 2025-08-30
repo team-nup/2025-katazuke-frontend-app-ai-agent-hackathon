@@ -19,7 +19,7 @@ class _RecordCreateContainerState extends State<RecordCreateContainer> {
   int? _startAge;
   int? _endAge;
   List<String> _imagePaths = [];
-  ItemKeepStatus _status = ItemKeepStatus.disposed;
+  MemoryStatus _status = MemoryStatus.disposed;
 
   // UI state
   bool _isLoading = false;
@@ -87,7 +87,7 @@ class _RecordCreateContainerState extends State<RecordCreateContainer> {
       _startAge = null;
       _endAge = null;
       _imagePaths.clear();
-      _status = ItemKeepStatus.disposed;
+      _status = MemoryStatus.disposed;
     });
   }
 

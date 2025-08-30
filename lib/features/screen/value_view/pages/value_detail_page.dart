@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
 import '../components/detail/value_info.dart';
 import '../components/detail/value_images.dart';
+import '../../../components/app_bar.dart';
 
 class ValueDetailPage extends StatelessWidget {
   final ValueSearch valueSearch;
@@ -23,9 +24,10 @@ class ValueDetailPage extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: onPopInvoked,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('価値詳細'),
-          backgroundColor: Colors.orange.shade50,
+        appBar: AppBarComponent(
+          title: '価値詳細',
+          titleIcon: Icons.info,
+          showBackButton: true,
           actions: [
             IconButton(
               onPressed: onEdit,

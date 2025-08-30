@@ -1,6 +1,6 @@
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../../core/models/DB/value_search.dart';
-import '../../../../../core/models/DB/memory_status.dart';
 
 class ValueSearchFactory {
   static const _uuid = Uuid();

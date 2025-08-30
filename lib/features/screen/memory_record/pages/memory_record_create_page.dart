@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory_status.dart';
 import '../components/shared/memory_form.dart';
 import '../../../components/photo_section.dart';
+import '../../../components/app_bar.dart';
 
 class RecordCreatePage extends StatelessWidget {
   final String title;
   final String? detail;
   final int? startAge;
   final int? endAge;
-  final ItemKeepStatus status;
+  final MemoryStatus status;
   final List<String> imagePaths;
   final bool isLoading;
 
@@ -17,7 +18,7 @@ class RecordCreatePage extends StatelessWidget {
   final ValueChanged<String> onDetailChanged;
   final ValueChanged<String> onStartAgeChanged;
   final ValueChanged<String> onEndAgeChanged;
-  final ValueChanged<ItemKeepStatus> onStatusChanged;
+  final ValueChanged<MemoryStatus> onStatusChanged;
   final VoidCallback onAddPhoto;
   final VoidCallback onPickFromGallery;
   final ValueChanged<int> onRemovePhoto;
@@ -46,8 +47,10 @@ class RecordCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('思い出を記録'),
+      appBar: const AppBarComponent(
+        title: '思い出を記録',
+        titleIcon: Icons.camera_alt,
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

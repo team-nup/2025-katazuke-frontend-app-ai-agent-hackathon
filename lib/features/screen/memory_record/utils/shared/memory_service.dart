@@ -13,7 +13,7 @@ class MemoryService {
     int? startAge,
     int? endAge,
     required List<String> imagePaths,
-    required ItemKeepStatus status,
+    required MemoryStatus status,
   }) async {
     // Validation
     final validationError = MemoryValidator.validateAll(
@@ -49,7 +49,7 @@ class MemoryService {
     int? endAge,
     required List<String> imagePaths,
     required List<String> imagesToDelete,
-    required ItemKeepStatus status,
+    required MemoryStatus status,
   }) async {
     // Validation
     final validationError = MemoryValidator.validateAll(
@@ -72,9 +72,9 @@ class MemoryService {
       imagePaths: imagePaths,
       clearImagePaths: imagePaths.isEmpty,
       status: status,
-      disposedAt: status == ItemKeepStatus.disposed
+      disposedAt: status == MemoryStatus.disposed
           ? (originalMemory.disposedAt ?? DateTime.now())
-          : (status != ItemKeepStatus.disposed
+          : (status != MemoryStatus.disposed
               ? null
               : originalMemory.disposedAt),
       updatedAt: DateTime.now(),
