@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
+class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final IconData? titleIcon;
   final List<Widget>? actions;
   final Widget? leading;
   final bool showBackButton;
 
-  const CommonAppBar({
+  const AppBarComponent({
     super.key,
     required this.title,
+    this.titleIcon,
     this.actions,
     this.leading,
     this.showBackButton = false,
@@ -19,6 +21,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Row(
         children: [
+          if (titleIcon != null) ...[
+            Icon(
+              titleIcon,
+              color: const Color(0xFF212121),
+              size: 24,
+            ),
+            const SizedBox(width: 8),
+          ],
           Text(
             title,
             style: const TextStyle(

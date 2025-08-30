@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../components/shared/recent_memories_section.dart';
 import '../components/shared/analytics_card.dart';
-import '../../../components/common_app_bar.dart';
+import '../../../components/app_bar.dart';
 
 class HomePage extends StatelessWidget {
   final Map<String, int> statistics;
@@ -24,8 +24,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
-      appBar: const CommonAppBar(
+      appBar: const AppBarComponent(
         title: 'ホーム',
+        titleIcon: Icons.home,
       ),
       body: RefreshIndicator(
         onRefresh: () async => onRefresh(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../components/detail/memory_info.dart';
 import '../components/detail/memory_images.dart';
+import '../../../components/app_bar.dart';
 
 class MemoryDetailPage extends StatelessWidget {
   final Memory memory;
@@ -23,9 +24,10 @@ class MemoryDetailPage extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: onPopInvoked,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('思い出詳細'),
-          backgroundColor: Colors.teal.shade50,
+        appBar: AppBarComponent(
+          title: '思い出詳細',
+          titleIcon: Icons.info,
+          showBackButton: true,
           actions: [
             IconButton(
               onPressed: onEdit,

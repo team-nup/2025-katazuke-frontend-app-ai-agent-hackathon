@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory_status.dart';
 import '../components/shared/memory_form.dart';
 import '../../../components/photo_section.dart';
+import '../../../components/app_bar.dart';
 
 class RecordCreatePage extends StatelessWidget {
   final String title;
@@ -46,8 +47,10 @@ class RecordCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('思い出を記録'),
+      appBar: const AppBarComponent(
+        title: '思い出を記録',
+        titleIcon: Icons.camera_alt,
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
