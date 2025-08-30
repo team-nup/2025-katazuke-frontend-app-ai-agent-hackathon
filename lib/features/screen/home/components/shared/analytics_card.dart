@@ -18,7 +18,7 @@ class AnalyticsCard extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      shadowColor: const Color(0xFFFF8F00).withOpacity(0.2),
+      shadowColor: const Color(0xFFFF8F00).withValues(alpha: 0.2),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -148,10 +148,10 @@ class AnalyticsCard extends StatelessWidget {
     return Container(
       width: isFullWidth ? double.infinity : null,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
