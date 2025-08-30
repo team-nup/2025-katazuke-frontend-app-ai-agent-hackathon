@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
 import 'package:okataduke/features/screen/value_view/containers/value_detail_container.dart';
+import '../../utils/list/value_item_helper.dart';
 
 class ValueItem extends StatelessWidget {
   final ValueSearch valueSearch;
@@ -99,7 +100,7 @@ class ValueItem extends StatelessWidget {
                       const SizedBox(height: 4),
                     ],
                     Text(
-                      _formatDate(valueSearch.insertedAt),
+                      ValueItemHelper.formatDate(valueSearch.insertedAt),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Colors.grey[600],
                           ),
@@ -110,11 +111,11 @@ class ValueItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _getStatusColor(valueSearch.status),
+                  color: ValueItemHelper.getStatusColor(valueSearch.status),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  _getStatusText(valueSearch.status),
+                  ValueItemHelper.getStatusText(valueSearch.status),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,
@@ -127,31 +128,5 @@ class ValueItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}';
-  }
-
-  Color _getStatusColor(dynamic status) {
-    switch (status.toString()) {
-      case 'ItemKeepStatus.keeping':
-        return Colors.blue;
-      case 'ItemKeepStatus.disposed':
-        return Colors.grey;
-      default:
-        return Colors.blue;
-    }
-  }
-
-  String _getStatusText(dynamic status) {
-    switch (status.toString()) {
-      case 'ItemKeepStatus.keeping':
-        return '保管中';
-      case 'ItemKeepStatus.disposed':
-        return '処分済';
-      default:
-        return '保管中';
-    }
   }
 }
