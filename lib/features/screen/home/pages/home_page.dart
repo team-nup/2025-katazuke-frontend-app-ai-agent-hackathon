@@ -28,27 +28,23 @@ class HomePage extends StatelessWidget {
         title: 'ホーム',
         titleIcon: Icons.home,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async => onRefresh(),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AnalyticsCard(statistics: statistics),
-              const SizedBox(height: 24),
-              _buildActionButtons(context),
-              const SizedBox(height: 24),
-              if (isLoading)
-                const Center(child: CircularProgressIndicator())
-              else
-                RecentMemoriesSection(
-                  memories: recentMemories,
-                  onMemoryTap: onMemoryTap,
-                ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AnalyticsCard(statistics: statistics),
+            const SizedBox(height: 24),
+            _buildActionButtons(context),
+            const SizedBox(height: 24),
+            if (isLoading)
+              const Center(child: CircularProgressIndicator())
+            else
+              RecentMemoriesSection(
+                memories: recentMemories,
+                onMemoryTap: onMemoryTap,
+              ),
+          ],
         ),
       ),
     );
