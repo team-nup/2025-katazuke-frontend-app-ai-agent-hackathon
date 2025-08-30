@@ -97,4 +97,16 @@ class ValueSearchRepository {
 
     return result.first['count'] as int;
   }
+
+  static Future<List<ValueSearch>> findWithPagination({
+    required int offset,
+    required int limit,
+    String? orderBy,
+  }) async {
+    return findAll(
+      offset: offset,
+      limit: limit,
+      orderBy: orderBy,
+    );
+  }
 }

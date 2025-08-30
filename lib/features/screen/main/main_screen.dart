@@ -4,7 +4,6 @@ import 'package:okataduke/features/screen/value_view/containers/value_list_conta
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
 import 'package:okataduke/features/screen/memory_view/containers/memory_list_container.dart';
 import 'package:okataduke/features/screen/memory_record/containers/record_create_container.dart';
-import 'package:okataduke/features/screen/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,7 +21,6 @@ class _MainScreenState extends State<MainScreen> {
     const RecordCreateContainer(),
     const ValueSearchCreateContainer(),
     const ValueListContainer(),
-    const SettingPage(),
   ];
 
   @override
@@ -59,10 +57,6 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.inventory),
             label: '価値一覧',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '設定',
           ),
         ],
       ),

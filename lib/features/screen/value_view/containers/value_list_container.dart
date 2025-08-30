@@ -15,6 +15,8 @@ class _ValueListContainerState extends State<ValueListContainer> {
   List<ValueSearch> _values = [];
   bool _isLoading = true;
   int _totalCount = 0;
+  int _currentPage = 1;
+  static const int _itemsPerPage = 10;
 
   @override
   void initState() {
@@ -27,7 +29,11 @@ class _ValueListContainerState extends State<ValueListContainer> {
 
     try {
       final totalCount = await ValueSearchRepository.count();
-      final values = await ValueSearchRepository.findAll();
+      final offset = (_currentPage - 1) * _itemsPerPage;
+      final values = await ValueSearchRepository.findWithPagination(
+        offset: offset,
+        limit: _itemsPerPage,
+      );
 
       setState(() {
         _values = values;
@@ -48,14 +54,26 @@ class _ValueListContainerState extends State<ValueListContainer> {
     _loadValues();
   }
 
+  void _onPageChanged(int page) {
+    setState(() {
+      _currentPage = page;
+    });
+    _loadValues();
+  }
+
+  int get _totalPages => (_totalCount / _itemsPerPage).ceil();
+
   @override
   Widget build(BuildContext context) {
     return ValueListPage(
       values: _values,
       isLoading: _isLoading,
       totalCount: _totalCount,
+      currentPage: _currentPage,
+      totalPages: _totalPages,
       onRefresh: _loadValues,
       onValueUpdated: _onValueUpdated,
+      onPageChanged: _onPageChanged,
     );
   }
 }
