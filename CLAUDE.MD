@@ -200,30 +200,32 @@
 
 ## 画面構成
 
-### 1. ホーム画面 (`activeTab === "home"`)
+### 1. ホーム画面
 
 #### ヘッダー
 
-- アプリ名「Memoria」とハートアイコン
-- メニューボタン（右上）
+- アプリ名「Memoria（テスト）」とハートアイコン
 
 #### メインコンテンツ
 
 **統計カード**
 
-- 保存した思い出の総数（24 件）
-- 今月の整理数（8 件）
-- グラデーション背景で視覚的に強調
+- 思い出　処分何件、保管何件
+- 売却検討中　何件
 
 **今日の整理セクション**
 
 - 「思い出を保存」ボタン（カメラアイコン、プライマリカラー）
 - 「価値を調べる」ボタン（検索アイコン、アウトライン）
+- ランダム思い出　ボタン(ボタンの設置のみでいい)
 
 **最近の思い出セクション**
 
 - 最新 3 件の思い出を表示
-- 各アイテムに画像、タイトル、カテゴリバッジ、日付、ハートボタン
+- 各アイテムに画像、タイトル、ステータス
+
+**その他**
+設定ページへ（画面に違和感がないように設置）
 
 ### 2. 思い出ボックス画面 (`activeTab === "memories"`)
 
@@ -285,10 +287,38 @@
 
 ### カラーパレット
 
-- プライマリ：温かみのあるアンバー系
-- セカンダリ：クリーム系
-- 背景：ニュートラルな白/グレー
-- アクセント：ハートアイコンなどに使用
+**プライマリカラー（温かみのあるアンバー系）**
+
+- Primary: `Color(0xFFFF8F00)` (Orange 800)
+- Primary Light: `Color(0xFFFFF3E0)` (Orange 50)  
+- Primary Medium: `Color(0xFFFFE0B2)` (Orange 200)
+- Primary Dark: `Color(0xFFE65100)` (Deep Orange 800)
+
+**セカンダリカラー（ウォームグレー系）**
+
+- Secondary: `Color(0xFF8D6E63)` (Brown 300)
+- Secondary Light: `Color(0xFFEFEBE9)` (Brown 50)
+- Secondary Dark: `Color(0xFF5D4037)` (Brown 700)
+
+**背景色**
+
+- Background: `Color(0xFFFAFAFA)` (Grey 50)
+- Surface: `Color(0xFFFFFFFF)` (White)
+- Card: `Color(0xFFF5F5F5)` (Grey 100)
+
+**アクセントカラー**
+
+- Accent Heart: `Color(0xFFE91E63)` (Pink 500)
+- Success: `Color(0xFF4CAF50)` (Green 500)
+- Warning: `Color(0xFFFF9800)` (Orange 500)
+- Error: `Color(0xFFF44336)` (Red 500)
+
+**テキストカラー**
+
+- Text Primary: `Color(0xFF212121)` (Grey 900)
+- Text Secondary: `Color(0xFF757575)` (Grey 600)
+- Text Disabled: `Color(0xFFBDBDBD)` (Grey 400)
+- Text On Primary: `Color(0xFFFFFFFF)` (White)
 
 ### タイポグラフィ
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../../../../core/database/repositories/memory_repository.dart';
+import '../../../../core/database/repositories/value_search_repository.dart';
 import '../../memory_view/containers/memory_detail_container.dart';
 import '../pages/home_page.dart';
 
@@ -26,11 +27,15 @@ class _HomeContainerState extends State<HomeContainer> {
     setState(() => _isLoading = true);
 
     try {
-      final statistics = await MemoryRepository.getStatistics();
+      final memoryStatistics = await MemoryRepository.getStatistics();
+      final valueSearchCount = await ValueSearchRepository.count();
       final recentMemories = await MemoryRepository.getRecentMemories();
 
+      final combinedStatistics = Map<String, int>.from(memoryStatistics);
+      combinedStatistics['valueSearch'] = valueSearchCount;
+
       setState(() {
-        _statistics = statistics;
+        _statistics = combinedStatistics;
         _recentMemories = recentMemories;
         _isLoading = false;
       });
