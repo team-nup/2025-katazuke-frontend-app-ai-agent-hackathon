@@ -13,12 +13,12 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   final List<Widget> _pages = [
-    const HomeContainer(),
     const MemoryListContainer(),
     const RecordCreateContainer(),
+    const HomeContainer(),
     const ValueSearchCreateContainer(),
     const ValueListContainer(),
   ];
@@ -39,23 +39,23 @@ class _MainScreenState extends State<MainScreen> {
         unselectedItemColor: Colors.grey.shade600,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.flag),
+            icon: Icon(Icons.list),
             label: '思い出',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.flag),
-            label: '記録',
+            label: '思い出記録',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
+            icon: Icon(Icons.home),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
             label: '価値検索',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.inventory),
+            icon: Icon(Icons.list),
             label: '価値一覧',
           ),
         ],
