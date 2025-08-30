@@ -174,7 +174,6 @@ class MemoryRepository {
       final statistics = <String, int>{
         'total': 0,
         'keeping': 0,
-        'considering': 0,
         'disposed': 0,
       };
 

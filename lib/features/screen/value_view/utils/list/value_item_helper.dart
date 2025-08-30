@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/models/DB/memory_status.dart';
-import '../../../../../core/mappers/memory_status_mapper.dart';
+import '../../../../../core/models/DB/item_keep_status.dart';
+import '../../../../../core/mappers/item_keep_status_mapper.dart';
 
 class ValueItemHelper {
   static String formatDate(DateTime date) {
@@ -19,6 +19,6 @@ class ValueItemHelper {
   }
 
   static String getStatusText(ItemKeepStatus status) {
-    return MemoryStatusMapper.toDisplayString(status);
+    return ItemKeepStatusMapper.toDisplayString(status);
   }
 }

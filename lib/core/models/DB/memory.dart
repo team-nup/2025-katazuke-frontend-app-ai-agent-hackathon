@@ -8,7 +8,7 @@ class Memory {
   final int? startAge;
   final int? endAge;
   final List<String>? imagePaths;
-  final ItemKeepStatus status;
+  final MemoryStatus status;
   final DateTime? disposedAt;
   final DateTime insertedAt;
   final DateTime updatedAt;
@@ -20,7 +20,7 @@ class Memory {
     this.startAge,
     this.endAge,
     this.imagePaths,
-    this.status = ItemKeepStatus.disposed,
+    this.status = MemoryStatus.disposed,
     this.disposedAt,
     required this.insertedAt,
     required this.updatedAt,
@@ -51,7 +51,7 @@ class Memory {
       imagePaths: map['image_paths'] != null
           ? List<String>.from(jsonDecode(map['image_paths']))
           : null,
-      status: ItemKeepStatus.values.byName(map['status']),
+      status: MemoryStatus.values.byName(map['status']),
       disposedAt: map['disposed_at'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['disposed_at'])
           : null,
@@ -68,7 +68,7 @@ class Memory {
     int? endAge,
     List<String>? imagePaths,
     bool clearImagePaths = false,
-    ItemKeepStatus? status,
+    MemoryStatus? status,
     DateTime? disposedAt,
     DateTime? insertedAt,
     DateTime? updatedAt,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/models/DB/memory_status.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import '../components/shared/value_search_form.dart';
 import '../../../components/photo_section.dart';
 import '../../../components/app_bar.dart';

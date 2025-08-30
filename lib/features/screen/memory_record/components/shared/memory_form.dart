@@ -6,12 +6,12 @@ class MemoryForm extends StatelessWidget {
   final String? detail;
   final int? startAge;
   final int? endAge;
-  final ItemKeepStatus status;
+  final MemoryStatus status;
   final Function(String) onTitleChanged;
   final Function(String) onDetailChanged;
   final Function(String) onStartAgeChanged;
   final Function(String) onEndAgeChanged;
-  final Function(ItemKeepStatus) onStatusChanged;
+  final Function(MemoryStatus) onStatusChanged;
 
   const MemoryForm({
     super.key,
@@ -68,34 +68,23 @@ class MemoryForm extends StatelessWidget {
   Widget _buildStatusRadios() {
     return Column(
       children: [
-        RadioListTile<ItemKeepStatus>(
+        RadioListTile<MemoryStatus>(
           title: const Text('保管中'),
           subtitle: const Text('まだ手元にある思い出の品'),
-          value: ItemKeepStatus.keeping,
+          value: MemoryStatus.keeping,
           groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
+          onChanged: (MemoryStatus? value) {
             if (value != null) {
               onStatusChanged(value);
             }
           },
         ),
-        RadioListTile<ItemKeepStatus>(
-          title: const Text('検討中'),
-          subtitle: const Text('処分を検討している思い出の品'),
-          value: ItemKeepStatus.considering,
-          groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
-            if (value != null) {
-              onStatusChanged(value);
-            }
-          },
-        ),
-        RadioListTile<ItemKeepStatus>(
+        RadioListTile<MemoryStatus>(
           title: const Text('処分済み'),
           subtitle: const Text('既に手放した思い出の品（処分日を自動記録）'),
-          value: ItemKeepStatus.disposed,
+          value: MemoryStatus.disposed,
           groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
+          onChanged: (MemoryStatus? value) {
             if (value != null) {
               onStatusChanged(value);
             }

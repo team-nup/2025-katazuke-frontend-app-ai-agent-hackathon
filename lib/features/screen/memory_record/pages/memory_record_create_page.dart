@@ -9,7 +9,7 @@ class RecordCreatePage extends StatelessWidget {
   final String? detail;
   final int? startAge;
   final int? endAge;
-  final ItemKeepStatus status;
+  final MemoryStatus status;
   final List<String> imagePaths;
   final bool isLoading;
 
@@ -18,7 +18,7 @@ class RecordCreatePage extends StatelessWidget {
   final ValueChanged<String> onDetailChanged;
   final ValueChanged<String> onStartAgeChanged;
   final ValueChanged<String> onEndAgeChanged;
-  final ValueChanged<ItemKeepStatus> onStatusChanged;
+  final ValueChanged<MemoryStatus> onStatusChanged;
   final VoidCallback onAddPhoto;
   final VoidCallback onPickFromGallery;
   final ValueChanged<int> onRemovePhoto;
