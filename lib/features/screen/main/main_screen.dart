@@ -4,7 +4,6 @@ import 'package:okataduke/features/screen/value_view/containers/value_list_conta
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
 import 'package:okataduke/features/screen/memory_view/containers/memory_list_container.dart';
 import 'package:okataduke/features/screen/memory_record/containers/record_create_container.dart';
-import 'package:okataduke/features/screen/setting/setting_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,15 +13,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
 
   final List<Widget> _pages = [
-    const HomeContainer(),
     const MemoryListContainer(),
     const RecordCreateContainer(),
+    const HomeContainer(),
     const ValueSearchCreateContainer(),
     const ValueListContainer(),
-    const SettingPage(),
   ];
 
   @override
@@ -41,28 +39,24 @@ class _MainScreenState extends State<MainScreen> {
         unselectedItemColor: Colors.grey.shade600,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'ホーム',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.flag),
+            icon: Icon(Icons.list),
             label: '思い出',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.flag),
-            label: '記録',
+            label: '思い出記録',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
+            icon: Icon(Icons.home),
+            label: 'ホーム',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
             label: '価値検索',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.inventory),
+            icon: Icon(Icons.list),
             label: '価値一覧',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '設定',
           ),
         ],
       ),
