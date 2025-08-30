@@ -27,17 +27,21 @@ class _HomeContainerState extends State<HomeContainer> {
     setState(() => _isLoading = true);
 
     try {
-      final memoryStatistics = await MemoryRepository.getStatistics();
-      final consideringValueSearchCount =
-          await ValueSearchRepository.countByStatus('considering');
-      final disposedValueSearchCount =
-          await ValueSearchRepository.countByStatus('disposed');
-      final recentMemories = await MemoryRepository.getRecentMemories();
+      final results = await Future.wait([
+        MemoryRepository.getStatistics(),
+        ValueSearchRepository.getStatistics(),
+        MemoryRepository.getRecentMemories(),
+      ]);
+
+      final memoryStatistics = results[0] as Map<String, int>;
+      final valueSearchStatistics = results[1] as Map<String, int>;
+      final recentMemories = results[2] as List<Memory>;
 
       final combinedStatistics = Map<String, int>.from(memoryStatistics);
       combinedStatistics['valueSearchConsidering'] =
-          consideringValueSearchCount;
-      combinedStatistics['valueSearchDisposed'] = disposedValueSearchCount;
+          valueSearchStatistics['considering'] ?? 0;
+      combinedStatistics['valueSearchDisposed'] =
+          valueSearchStatistics['disposed'] ?? 0;
 
       setState(() {
         _statistics = combinedStatistics;
