@@ -110,17 +110,6 @@ class ValueSearchRepository {
     );
   }
 
-  static Future<int> countByStatus(String status) async {
-    final db = await DatabaseHelper.database;
-
-    final List<Map<String, dynamic>> result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM ${DatabaseMigration.valueSearchTable} WHERE status = ?',
-      [status],
-    );
-
-    return result.first['count'] as int;
-  }
-
   static Future<Map<String, int>> getStatistics() async {
     try {
       final db = await DatabaseHelper.database;
