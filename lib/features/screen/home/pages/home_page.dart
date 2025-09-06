@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../components/shared/recent_memories_section.dart';
 import '../components/shared/analytics_card.dart';
@@ -23,7 +24,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
+      backgroundColor: AppColors.background,
       appBar: const AppBarComponent(
         title: 'ホーム',
         titleIcon: Icons.home,
@@ -71,8 +72,8 @@ class HomePage extends StatelessWidget {
                 icon: const Icon(Icons.camera_alt),
                 label: const Text('思い出を保存'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal.shade600,
-                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textOnPrimary,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
