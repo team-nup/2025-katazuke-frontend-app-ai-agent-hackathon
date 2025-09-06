@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 import 'package:okataduke/features/screen/value_search/containers/value_search_create_container.dart';
 import 'package:okataduke/features/screen/value_view/containers/value_list_container.dart';
 import 'package:okataduke/features/screen/home/containers/home_container.dart';
@@ -35,8 +36,8 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: Colors.teal.shade700,
-        unselectedItemColor: Colors.grey.shade600,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.textSecondary,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
