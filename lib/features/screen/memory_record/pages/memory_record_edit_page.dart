@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 import '../../../../core/models/DB/memory_status.dart';
 import '../components/shared/memory_form.dart';
-import '../../../components/photo_section.dart';
+import '../../../components/app_bar.dart';
 
 class RecordEditPage extends StatelessWidget {
   final String title;
@@ -46,8 +47,11 @@ class RecordEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('思い出を編集'),
+      backgroundColor: AppColors.background,
+      appBar: const AppBarComponent(
+        title: '思い出を編集',
+        titleIcon: Icons.edit,
+        showBackButton: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -60,14 +64,12 @@ class RecordEditPage extends StatelessWidget {
               startAge: startAge,
               endAge: endAge,
               status: status,
+              imagePaths: imagePaths,
               onTitleChanged: onTitleChanged,
               onDetailChanged: onDetailChanged,
               onStartAgeChanged: onStartAgeChanged,
               onEndAgeChanged: onEndAgeChanged,
               onStatusChanged: onStatusChanged,
-            ),
-            PhotoSection(
-              imagePaths: imagePaths,
               onAddPhoto: onAddPhoto,
               onPickFromGallery: onPickFromGallery,
               onRemovePhoto: onRemovePhoto,
@@ -75,9 +77,45 @@ class RecordEditPage extends StatelessWidget {
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
+              height: 56,
               child: ElevatedButton(
                 onPressed: isLoading ? null : onUpdate,
-                child: isLoading ? const Text('更新中...') : const Text('更新'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textOnPrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  elevation: 2,
+                ),
+                child: isLoading 
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Text('更新中...'),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.update, size: 20),
+                        SizedBox(width: 8),
+                        Text('思い出を更新'),
+                      ],
+                    ),
               ),
             ),
           ],

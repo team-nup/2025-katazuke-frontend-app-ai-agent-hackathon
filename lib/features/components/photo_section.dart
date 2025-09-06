@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 
 class PhotoSection extends StatelessWidget {
   final List<String> imagePaths;
