@@ -72,7 +72,7 @@ class QuickActionsCard extends StatelessWidget {
                     onPressed: onCheckValue,
                     icon: Icons.search,
                     title: '価値を調べる',
-                    color: AppColors.secondary,
+                    color: AppColors.primary,
                   ),
                 ),
               ],
