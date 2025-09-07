@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -24,7 +25,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
           if (titleIcon != null) ...[
             Icon(
               titleIcon,
-              color: const Color(0xFF212121),
+              color: AppColors.textPrimary,
               size: 24,
             ),
             const SizedBox(width: 8),
@@ -32,19 +33,19 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
           Text(
             title,
             style: const TextStyle(
-              color: Color(0xFF212121),
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.w600,
             ),
           ),
         ],
       ),
-      backgroundColor: const Color(0xFFFFE0B2),
+      backgroundColor: AppColors.primaryMedium,
       elevation: 0,
       leading: leading,
       automaticallyImplyLeading: showBackButton,
       actions: actions,
       iconTheme: const IconThemeData(
-        color: Color(0xFF212121),
+        color: AppColors.textPrimary,
       ),
     );
   }

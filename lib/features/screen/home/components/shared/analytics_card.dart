@@ -158,12 +158,25 @@ class AnalyticsCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       child: Column(
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: isFullWidth ? 32 : 24,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                color: color,
+                size: isFullWidth ? 32 : 24,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: const Color(0xFF212121),
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           Text(
             '$value',
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -172,15 +185,6 @@ class AnalyticsCard extends StatelessWidget {
                   fontSize: isFullWidth ? 28 : 24,
                 ),
           ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: const Color(0xFF212121),
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-          const SizedBox(height: 2),
         ],
       ),
     );

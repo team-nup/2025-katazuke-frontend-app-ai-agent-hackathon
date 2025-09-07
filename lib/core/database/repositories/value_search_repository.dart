@@ -110,14 +110,35 @@ class ValueSearchRepository {
     );
   }
 
-  static Future<int> countByStatus(String status) async {
-    final db = await DatabaseHelper.database;
+  static Future<Map<String, int>> getStatistics() async {
+    try {
+      final db = await DatabaseHelper.database;
+      final List<Map<String, dynamic>> result = await db.rawQuery('''
+        SELECT 
+          status,
+          COUNT(*) as count
+        FROM ${DatabaseMigration.valueSearchTable}
+        GROUP BY status
+      ''');
 
-    final List<Map<String, dynamic>> result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM ${DatabaseMigration.valueSearchTable} WHERE status = ?',
-      [status],
-    );
+      final statistics = <String, int>{
+        'total': 0,
+        'keeping': 0,
+        'considering': 0,
+        'disposed': 0,
+      };
 
-    return result.first['count'] as int;
+      for (final row in result) {
+        final status = row['status'] as String;
+        final count = row['count'] as int;
+        statistics[status] = count;
+        statistics['total'] = statistics['total']! + count;
+      }
+
+      return statistics;
+    } catch (e) {
+      debugPrint('Error getting value search statistics: $e');
+      rethrow;
+    }
   }
 }
