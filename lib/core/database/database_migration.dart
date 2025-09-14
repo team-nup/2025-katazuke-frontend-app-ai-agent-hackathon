@@ -40,6 +40,21 @@ class DatabaseMigration {
         updated_at INTEGER NOT NULL
       )
     ''');
+
+    await db.execute('''
+      CREATE INDEX idx_memories_status
+      ON $memoriesTable (status)
+    ''');
+
+    await db.execute('''
+      CREATE INDEX idx_memories_inserted_at
+      ON $memoriesTable (inserted_at DESC)
+    ''');
+
+    await db.execute('''
+      CREATE INDEX idx_memories_disposed_at
+      ON $memoriesTable (disposed_at DESC)
+    ''');
   }
 
   static Future<void> _createValueSearchTable(Database db) async {
@@ -57,6 +72,21 @@ class DatabaseMigration {
         updated_at INTEGER NOT NULL
       )
     ''');
+
+    await db.execute('''
+      CREATE INDEX idx_value_searches_status
+      ON $valueSearchTable (status)
+    ''');
+
+    await db.execute('''
+      CREATE INDEX idx_value_searches_inserted_at
+      ON $valueSearchTable (inserted_at DESC)
+    ''');
+
+    await db.execute('''
+      CREATE INDEX idx_value_searches_disposed_at
+      ON $valueSearchTable (disposed_at DESC)
+    ''');
   }
 
   static Future<void> _createCandidateProductNamesTable(Database db) async {
@@ -71,6 +101,11 @@ class DatabaseMigration {
         updated_at INTEGER NOT NULL,
         FOREIGN KEY (value_search_id) REFERENCES $valueSearchTable (id) ON DELETE CASCADE
       )
+    ''');
+
+    await db.execute('''
+      CREATE INDEX idx_candidate_product_names_value_search_id
+      ON $candidateProductNamesTable (value_search_id)
     ''');
   }
 
