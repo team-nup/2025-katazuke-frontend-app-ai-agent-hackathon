@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/models/service/search_result.dart';
 import '../../../../services/api/google/custom_search_service.dart';
 
 class UrlSearchTestPage extends StatefulWidget {

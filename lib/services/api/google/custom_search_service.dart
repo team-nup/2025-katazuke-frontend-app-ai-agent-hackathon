@@ -1,20 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-class SearchResult {
-  final String title;
-  final String url;
-  final String snippet;
-  final String? sourceImageUrl;
-
-  SearchResult({
-    required this.title,
-    required this.url,
-    required this.snippet,
-    this.sourceImageUrl,
-  });
-}
+import 'package:okataduke/core/models/service/search_result.dart';
 
 class CustomSearchService {
   final String apiKey;
@@ -35,16 +22,13 @@ class CustomSearchService {
       final imageResults = await _searchPageByImageUrl(imageUrl);
       results.addAll(imageResults);
 
-      // リクエスト間隔を空ける
       await Future.delayed(const Duration(milliseconds: 200));
     }
-    print(results);
     return results;
   }
 
   Future<List<SearchResult>> _searchPageByImageUrl(String imageUrl) async {
     try {
-      // 逆画像検索を実行
       final imageSearchUrl =
           'https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=$searchEngineId&searchType=image&q=${Uri.encodeQueryComponent(imageUrl)}';
 
