@@ -91,7 +91,7 @@ class ValueItem extends StatelessWidget {
                     ],
                     if (valueSearch.value != null) ...[
                       Text(
-                        '推定価値: ¥${valueSearch.value!.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                        '価値: ¥${valueSearch.value!.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: Colors.green[700],
                               fontWeight: FontWeight.bold,

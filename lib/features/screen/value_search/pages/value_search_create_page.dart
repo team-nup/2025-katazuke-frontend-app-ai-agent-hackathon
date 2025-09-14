@@ -3,6 +3,7 @@ import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import '../components/shared/value_search_form.dart';
 import '../../../components/photo_section.dart';
 import '../../../components/app_bar.dart';
+import 'url_search_test_page.dart';
 
 class ValueSearchCreatePage extends StatelessWidget {
   final String title;
@@ -69,6 +70,21 @@ class ValueSearchCreatePage extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isLoading ? null : onSave,
                 child: isLoading ? const Text('分析中...') : const Text('価値を分析'),
+              ),
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UrlSearchTestPage(),
+                    ),
+                  );
+                },
+                child: const Text('URL検索テスト'),
               ),
             ),
           ],

@@ -29,7 +29,7 @@ class ValueListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarComponent(
-        title: '価値分析 ($totalCount)',
+        title: '売却管理 ($totalCount)',
         titleIcon: Icons.analytics,
       ),
       body: ValueList(

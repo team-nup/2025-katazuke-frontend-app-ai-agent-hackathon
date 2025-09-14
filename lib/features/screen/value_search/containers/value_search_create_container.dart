@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../../../../core/models/DB/item_keep_status.dart';
-import '../pages/value_search_create_page.dart';
-import '../../memory_record/utils/shared/image_picker_helper.dart';
-import '../utils/shared/value_search_service.dart';
-import '../../memory_record/utils/shared/toast_helper.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
+import 'package:okataduke/features/screen/memory_record/utils/shared/image_picker_helper.dart';
+import 'package:okataduke/features/screen/memory_record/utils/shared/toast_helper.dart';
+import 'package:okataduke/features/screen/value_search/pages/value_search_create_page.dart';
+import 'package:okataduke/features/screen/value_search/utils/shared/value_search_service.dart';
+import 'package:okataduke/features/screen/value_search/utils/shared/product_analysis_service.dart';
 
 class ValueSearchCreateContainer extends StatefulWidget {
   const ValueSearchCreateContainer({super.key});
@@ -16,13 +17,11 @@ class ValueSearchCreateContainer extends StatefulWidget {
 
 class _ValueSearchCreateContainerState
     extends State<ValueSearchCreateContainer> {
-  // Form data using ValueSearch type structure
   String _title = '';
   String? _detail;
   List<String> _imagePaths = [];
   ItemKeepStatus _status = ItemKeepStatus.keeping;
 
-  // UI state
   bool _isLoading = false;
 
   @override
@@ -54,11 +53,30 @@ class _ValueSearchCreateContainerState
     });
 
     try {
-      // Generate dummy AI values
+      String dummyProductName;
+      int dummyConfidence;
+
+      if (_imagePaths.isNotEmpty) {
+        final analysisResult = await ProductAnalysisService.analyzeProduct(
+          imagePath: _imagePaths[0],
+          userHint: _detail,
+        );
+
+        if (analysisResult.success) {
+          dummyProductName = analysisResult.productName;
+          dummyConfidence = analysisResult.confidence;
+        } else {
+          print('Product analysis error: ${analysisResult.error}');
+          dummyProductName = _generateDummyProductName();
+          dummyConfidence = Random().nextInt(40) + 60;
+        }
+      } else {
+        dummyProductName = _generateDummyProductName();
+        dummyConfidence = Random().nextInt(40) + 60;
+      }
+
       final random = Random();
-      final dummyValue = random.nextInt(50000) + 1000; // 1000-51000
-      final dummyProductName = _generateDummyProductName();
-      final dummyConfidence = random.nextInt(40) + 60; // 60-100
+      final dummyValue = random.nextInt(50000) + 1000;
       final dummyMinPrice = (dummyValue * 0.8).round();
       final dummyMaxPrice = (dummyValue * 1.2).round();
 
@@ -79,6 +97,7 @@ class _ValueSearchCreateContainerState
         _resetForm();
       }
     } catch (e) {
+      print('Value search error: $e');
       if (mounted) {
         ToastHelper.showError(
             context, e.toString().replaceFirst('Exception: ', ''));

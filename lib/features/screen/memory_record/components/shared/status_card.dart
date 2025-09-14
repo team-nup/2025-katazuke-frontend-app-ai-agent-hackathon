@@ -38,7 +38,7 @@ class StatusCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '思い出のステータス',
+                  '思い出をどうする？',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -58,7 +58,7 @@ class StatusCard extends StatelessWidget {
     return Column(
       children: [
         _buildStatusOption(
-          title: '保管中',
+          title: '保管する',
           subtitle: '手元におく思い出の品',
           icon: Icons.home,
           value: MemoryStatus.keeping,
@@ -66,7 +66,7 @@ class StatusCard extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         _buildStatusOption(
-          title: '処分済み',
+          title: '処分する',
           subtitle: '手放す思い出の品',
           icon: Icons.check_circle,
           value: MemoryStatus.disposed,

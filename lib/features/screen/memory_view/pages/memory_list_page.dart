@@ -23,8 +23,8 @@ class MemoryListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarComponent(
-        title: '思い出ボックス ($totalCount)',
-        titleIcon: Icons.inventory,
+        title: '思い出一覧 ($totalCount)',
+        titleIcon: Icons.list,
       ),
       body: MemoryList(
         memories: memories,
