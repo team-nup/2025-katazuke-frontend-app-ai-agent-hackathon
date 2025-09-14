@@ -57,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: '価値一覧',
+            label: '売却管理',
           ),
         ],
       ),

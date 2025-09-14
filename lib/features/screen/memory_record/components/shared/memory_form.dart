@@ -53,12 +53,20 @@ class MemoryForm extends StatelessWidget {
           onPickFromGallery: onPickFromGallery,
           onRemovePhoto: onRemovePhoto,
         ),
+        Text(
+          "↓",
+          style: TextStyle(fontSize: 24),
+        ),
         const SizedBox(height: 16),
         AgeCard(
           startAge: startAge,
           endAge: endAge,
           onStartAgeChanged: onStartAgeChanged,
           onEndAgeChanged: onEndAgeChanged,
+        ),
+        Text(
+          "↓",
+          style: TextStyle(fontSize: 24),
         ),
         const SizedBox(height: 16),
         StatusCard(
@@ -68,5 +76,4 @@ class MemoryForm extends StatelessWidget {
       ],
     );
   }
-
 }

@@ -48,11 +48,11 @@ class AgeCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '思い出の時期',
+                  'いつ頃使ってた？',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                      ),
                 ),
               ],
             ),
@@ -60,8 +60,8 @@ class AgeCard extends StatelessWidget {
             Text(
               'いつ頃の思い出ですか？（年齢）',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondary,
-              ),
+                    color: AppColors.textSecondary,
+                  ),
             ),
             const SizedBox(height: 12),
             Row(

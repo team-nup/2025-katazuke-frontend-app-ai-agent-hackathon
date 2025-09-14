@@ -83,7 +83,7 @@ class QuickActionsCard extends StatelessWidget {
               child: QuickActionItem(
                 onPressed: onRandomMemory,
                 icon: Icons.shuffle,
-                title: 'ランダム思い出',
+                title: 'ランダムに思い出を閲覧',
                 color: AppColors.success,
                 isWide: true,
               ),
