@@ -2,19 +2,21 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:okataduke/services/api/gc/gemini_api_service.dart';
 import 'package:okataduke/features/screen/value_search/utils/shared/vision_search_service.dart';
+import 'package:okataduke/core/models/service/product_candidate.dart';
 
 class ProductAnalysisResult {
-  final String productName;
-  final int confidence;
+  final List<ProductCandidate> candidates;
   final bool success;
   final String? error;
 
   ProductAnalysisResult({
-    required this.productName,
-    required this.confidence,
+    required this.candidates,
     required this.success,
     this.error,
   });
+
+  String get productName => candidates.isNotEmpty ? candidates.first.name : '';
+  int get confidence => candidates.isNotEmpty ? (candidates.first.confidence * 100).round() : 0;
 }
 
 class ProductAnalysisService {
@@ -43,22 +45,19 @@ class ProductAnalysisService {
 
       if (response.success && response.candidates.isNotEmpty) {
         return ProductAnalysisResult(
-          productName: response.candidates[0].name,
-          confidence: (response.candidates[0].confidence * 100).round(),
+          candidates: response.candidates,
           success: true,
         );
       } else {
         return ProductAnalysisResult(
-          productName: '',
-          confidence: 0,
+          candidates: [],
           success: false,
           error: 'Gemini API Error: ${response.error}',
         );
       }
     } catch (e) {
       return ProductAnalysisResult(
-        productName: '',
-        confidence: 0,
+        candidates: [],
         success: false,
         error: 'Analysis failed: $e',
       );

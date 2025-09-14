@@ -18,14 +18,14 @@ class ValueInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              valueSearch.title,
+              valueSearch.detectedProductName ?? '不明な商品',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
             const SizedBox(height: 16),
-            if (valueSearch.detail != null) ...[
-              _buildInfoRow('詳細', valueSearch.detail!),
+            if (valueSearch.productNameHint != null) ...[
+              _buildInfoRow('商品名ヒント', valueSearch.productNameHint!),
               const SizedBox(height: 8),
             ],
             if (valueSearch.detectedProductName != null) ...[
@@ -37,14 +37,6 @@ class ValueInfo extends StatelessWidget {
                 '推定価値',
                 '¥${valueSearch.value!.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
                 valueColor: Colors.green[700],
-              ),
-              const SizedBox(height: 8),
-            ],
-            if (valueSearch.minPrice != null &&
-                valueSearch.maxPrice != null) ...[
-              _buildInfoRow(
-                '価格帯',
-                '¥${_formatPrice(valueSearch.minPrice!)} - ¥${_formatPrice(valueSearch.maxPrice!)}',
               ),
               const SizedBox(height: 8),
             ],

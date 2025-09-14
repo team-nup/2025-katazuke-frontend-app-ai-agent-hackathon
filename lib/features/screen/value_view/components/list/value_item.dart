@@ -70,7 +70,7 @@ class ValueItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      valueSearch.title,
+                      valueSearch.detectedProductName ?? '不明な商品',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),

@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/item_keep_status.dart';
 
 class ValueSearchForm extends StatelessWidget {
-  final String title;
   final String? detail;
   final ItemKeepStatus status;
-  final Function(String) onTitleChanged;
   final Function(String) onDetailChanged;
   final Function(ItemKeepStatus) onStatusChanged;
 
   const ValueSearchForm({
     super.key,
-    required this.title,
     this.detail,
     required this.status,
-    required this.onTitleChanged,
     required this.onDetailChanged,
     required this.onStatusChanged,
   });
@@ -25,13 +21,8 @@ class ValueSearchForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
-          initialValue: title,
-          decoration: const InputDecoration(labelText: 'アイテム名'),
-          onChanged: onTitleChanged,
-        ),
-        TextFormField(
           initialValue: detail ?? '',
-          decoration: const InputDecoration(labelText: '詳細・メモ'),
+          decoration: const InputDecoration(labelText: '商品名のヒント・詳細'),
           onChanged: onDetailChanged,
         ),
         const SizedBox(height: 16),

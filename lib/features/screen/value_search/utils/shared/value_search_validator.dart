@@ -40,13 +40,11 @@ class ValueSearchValidator {
   }
 
   static String? validateAll({
-    required String title,
-    String? detail,
+    String? productNameHint,
     required List<String> imagePaths,
     required String detectedProductName,
   }) {
-    return validateTitle(title) ??
-        validateDetail(detail) ??
+    return validateDetail(productNameHint) ??
         validateImagePaths(imagePaths) ??
         validateDetectedProductName(detectedProductName);
   }

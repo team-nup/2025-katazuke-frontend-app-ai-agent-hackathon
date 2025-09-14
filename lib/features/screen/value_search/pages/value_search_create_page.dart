@@ -6,14 +6,12 @@ import '../../../components/app_bar.dart';
 import 'url_search_test_page.dart';
 
 class ValueSearchCreatePage extends StatelessWidget {
-  final String title;
   final String? detail;
   final ItemKeepStatus status;
   final List<String> imagePaths;
   final bool isLoading;
 
   // Callbacks
-  final ValueChanged<String> onTitleChanged;
   final ValueChanged<String> onDetailChanged;
   final ValueChanged<ItemKeepStatus> onStatusChanged;
   final VoidCallback onAddPhoto;
@@ -23,12 +21,10 @@ class ValueSearchCreatePage extends StatelessWidget {
 
   const ValueSearchCreatePage({
     super.key,
-    required this.title,
     this.detail,
     required this.status,
     required this.imagePaths,
     required this.isLoading,
-    required this.onTitleChanged,
     required this.onDetailChanged,
     required this.onStatusChanged,
     required this.onAddPhoto,
@@ -51,10 +47,8 @@ class ValueSearchCreatePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ValueSearchForm(
-              title: title,
               detail: detail,
               status: status,
-              onTitleChanged: onTitleChanged,
               onDetailChanged: onDetailChanged,
               onStatusChanged: onStatusChanged,
             ),
