@@ -4,19 +4,22 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseMigration {
   static const String memoriesTable = 'memories';
   static const String valueSearchTable = 'value_searches';
+  static const String candidateProductNamesTable = 'candidate_product_names';
 
   static Future<void> onCreate(Database db, int version) async {
     debugPrint('Creating database tables...');
-    
+
     await _createMemoriesTable(db);
     await _createValueSearchTable(db);
-    
+    await _createCandidateProductNamesTable(db);
+
     debugPrint('Database tables created successfully');
   }
 
-  static Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
+  static Future<void> onUpgrade(
+      Database db, int oldVersion, int newVersion) async {
     debugPrint('Upgrading database from version $oldVersion to $newVersion');
-    
+
     for (int version = oldVersion + 1; version <= newVersion; version++) {
       await _migrateToVersion(db, version);
     }
@@ -43,18 +46,30 @@ class DatabaseMigration {
     await db.execute('''
       CREATE TABLE $valueSearchTable (
         id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        detail TEXT,
+        product_name_hint TEXT,
         image_paths TEXT NOT NULL,
         value INTEGER NOT NULL,
         status TEXT DEFAULT 'keeping',
         detected_product_name TEXT NOT NULL,
         ai_confidence_score INTEGER NOT NULL,
-        min_price INTEGER,
-        max_price INTEGER,
         disposed_at INTEGER,
         inserted_at INTEGER NOT NULL,
         updated_at INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  static Future<void> _createCandidateProductNamesTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE $candidateProductNamesTable (
+        id TEXT PRIMARY KEY,
+        value_search_id TEXT NOT NULL,
+        rank INTEGER NOT NULL,
+        product_name TEXT NOT NULL,
+        confidence REAL NOT NULL,
+        inserted_at INTEGER NOT NULL,
+        updated_at INTEGER NOT NULL,
+        FOREIGN KEY (value_search_id) REFERENCES $valueSearchTable (id) ON DELETE CASCADE
       )
     ''');
   }
