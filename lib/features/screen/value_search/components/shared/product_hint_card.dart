@@ -37,9 +37,9 @@ class ProductHintCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '商品につながる手がかり',
+                  '商品名の手がかりはある？',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),

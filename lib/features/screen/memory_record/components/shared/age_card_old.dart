@@ -24,6 +24,7 @@ class _AgeCardState extends State<AgeCard> {
   late ScrollController _scrollController;
   late TextEditingController _startAgeController;
   late TextEditingController _endAgeController;
+  bool _isUpdatingFromIcon = false;
 
   @override
   void initState() {
@@ -40,25 +41,59 @@ class _AgeCardState extends State<AgeCard> {
   @override
   void didUpdateWidget(AgeCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // アイコン選択による値の変更を検知して更新
-    if (oldWidget.startAge != widget.startAge) {
-      final newText = widget.startAge?.toString() ?? '';
-      if (_startAgeController.text != newText) {
-        _startAgeController.value = TextEditingValue(
-          text: newText,
-          selection: TextSelection.collapsed(offset: newText.length),
-        );
+    // アイコン選択時のみcontrollerを更新
+    if (_isUpdatingFromIcon) {
+      if (oldWidget.startAge != widget.startAge) {
+        _startAgeController.text = widget.startAge?.toString() ?? '';
       }
-    }
-    if (oldWidget.endAge != widget.endAge) {
-      final newText = widget.endAge?.toString() ?? '';
-      if (_endAgeController.text != newText) {
-        _endAgeController.value = TextEditingValue(
-          text: newText,
-          selection: TextSelection.collapsed(offset: newText.length),
-        );
+      if (oldWidget.endAge != widget.endAge) {
+        _endAgeController.text = widget.endAge?.toString() ?? '';
       }
+      _isUpdatingFromIcon = false;
     }
+  }
+
+  void _handleIconSelection(int age) {
+    setState(() {
+      _isUpdatingFromIcon = true;
+    });
+
+    AgeCardUtils.onStageSelected(
+      age,
+      widget.startAge,
+      widget.endAge,
+      widget.onStartAgeChanged,
+      widget.onEndAgeChanged,
+    );
+
+    // 次のフレームでフラグをリセット
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _isUpdatingFromIcon = false;
+        });
+      }
+    });
+  }
+
+  void _handleClearSelection() {
+    setState(() {
+      _isUpdatingFromIcon = true;
+    });
+
+    AgeCardUtils.clearSelection(
+      widget.onStartAgeChanged,
+      widget.onEndAgeChanged,
+    );
+
+    // 次のフレームでフラグをリセット
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() {
+          _isUpdatingFromIcon = false;
+        });
+      }
+    });
   }
 
   @override
@@ -134,7 +169,7 @@ class _AgeCardState extends State<AgeCard> {
 
   Widget _buildAgeTimeline() {
     return Container(
-      height: 95,
+      height: 95, // スクロールバー分の高さを追加
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: AppColors.card.withOpacity(0.1),
@@ -159,13 +194,7 @@ class _AgeCardState extends State<AgeCard> {
               return Row(
                 children: [
                   GestureDetector(
-                    onTap: () => AgeCardUtils.onStageSelected(
-                      age,
-                      widget.startAge,
-                      widget.endAge,
-                      widget.onStartAgeChanged,
-                      widget.onEndAgeChanged,
-                    ),
+                    onTap: () => _handleIconSelection(age),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -292,7 +321,12 @@ class _AgeCardState extends State<AgeCard> {
       child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
-        onChanged: onChanged,
+        onChanged: (value) {
+          // アイコン選択時の自動更新中は手動入力のコールバックを呼ばない
+          if (!_isUpdatingFromIcon) {
+            onChanged(value);
+          }
+        },
         style: TextStyle(
           color: AppColors.textPrimary,
           fontSize: 16,
@@ -388,10 +422,7 @@ class _AgeCardState extends State<AgeCard> {
             ),
           ),
           GestureDetector(
-            onTap: () => AgeCardUtils.clearSelection(
-              widget.onStartAgeChanged,
-              widget.onEndAgeChanged,
-            ),
+            onTap: () => _handleClearSelection(),
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(

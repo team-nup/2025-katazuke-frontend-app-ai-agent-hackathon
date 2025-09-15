@@ -79,12 +79,20 @@ class ValueSearchCreatePage extends StatelessWidget {
                           color: Colors.white,
                         ),
                       )
-                    : const Text(
-                        '価値を調べる',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.search,
+                              size: 20, color: AppColors.iconGreen),
+                          SizedBox(width: 8),
+                          Text(
+                            '価値を調べる',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
               ),
             ),

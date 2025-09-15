@@ -33,7 +33,7 @@ class StatusCard extends StatelessWidget {
               children: [
                 Icon(
                   Icons.inventory,
-                  color: AppColors.accentHeart,
+                  color: AppColors.primary,
                   size: 24,
                 ),
                 const SizedBox(width: 8),
@@ -42,6 +42,7 @@ class StatusCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
+                        fontSize: 20,
                       ),
                 ),
               ],

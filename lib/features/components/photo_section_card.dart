@@ -48,15 +48,7 @@ class PhotoSectionCard extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
-                    fontSize: 18,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '最大10枚まで追加できます',
-                  style: TextStyle(
-                    color: AppColors.textDisabled,
-                    fontSize: 12,
+                    fontSize: 20,
                   ),
                 ),
               ],

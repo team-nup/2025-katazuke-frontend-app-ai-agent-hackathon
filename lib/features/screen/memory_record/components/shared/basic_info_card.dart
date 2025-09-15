@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
-import 'package:okataduke/features/components/photo_section_card.dart';
 
 class BasicInfoCard extends StatelessWidget {
   final String title;
   final String? detail;
   final Function(String) onTitleChanged;
   final Function(String) onDetailChanged;
-  final List<String> imagePaths;
-  final VoidCallback onAddPhoto;
-  final VoidCallback? onPickFromGallery;
-  final Function(int)? onRemovePhoto;
 
   const BasicInfoCard({
     super.key,
@@ -18,10 +13,6 @@ class BasicInfoCard extends StatelessWidget {
     this.detail,
     required this.onTitleChanged,
     required this.onDetailChanged,
-    required this.imagePaths,
-    required this.onAddPhoto,
-    this.onPickFromGallery,
-    this.onRemovePhoto,
   });
 
   @override
@@ -51,10 +42,11 @@ class BasicInfoCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'どんな思い出？',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),
@@ -74,19 +66,6 @@ class BasicInfoCard extends StatelessWidget {
               icon: Icons.description,
               maxLines: 3,
               onChanged: onDetailChanged,
-            ),
-            const SizedBox(height: 24),
-            Divider(
-              color: AppColors.textDisabled.withOpacity(0.3),
-              thickness: 1,
-            ),
-            const SizedBox(height: 16),
-            PhotoSectionCard(
-              title: '写真を追加',
-              imagePaths: imagePaths,
-              onAddPhoto: onAddPhoto,
-              onPickFromGallery: onPickFromGallery,
-              onRemovePhoto: onRemovePhoto,
             ),
           ],
         ),
@@ -146,5 +125,4 @@ class BasicInfoCard extends StatelessWidget {
       ),
     );
   }
-
 }
