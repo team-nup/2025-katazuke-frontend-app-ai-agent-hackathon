@@ -17,10 +17,9 @@ class ValueSearchCreateContainer extends StatefulWidget {
 
 class _ValueSearchCreateContainerState
     extends State<ValueSearchCreateContainer> {
-  String _title = '';
   String? _detail;
   List<String> _imagePaths = [];
-  ItemKeepStatus _status = ItemKeepStatus.keeping;
+  ItemKeepStatus _status = ItemKeepStatus.considering;
 
   bool _isLoading = false;
 
@@ -55,9 +54,10 @@ class _ValueSearchCreateContainerState
     try {
       String dummyProductName;
       int dummyConfidence;
+      ProductAnalysisResult? analysisResult;
 
       if (_imagePaths.isNotEmpty) {
-        final analysisResult = await ProductAnalysisService.analyzeProduct(
+        analysisResult = await ProductAnalysisService.analyzeProduct(
           imagePath: _imagePaths[0],
           userHint: _detail,
         );
@@ -77,19 +77,15 @@ class _ValueSearchCreateContainerState
 
       final random = Random();
       final dummyValue = random.nextInt(50000) + 1000;
-      final dummyMinPrice = (dummyValue * 0.8).round();
-      final dummyMaxPrice = (dummyValue * 1.2).round();
 
       await ValueSearchService.createValueSearch(
-        title: _title,
-        detail: _detail,
+        productNameHint: _detail,
         imagePaths: _imagePaths,
         value: dummyValue,
         status: _status,
         detectedProductName: dummyProductName,
         aiConfidenceScore: dummyConfidence,
-        minPrice: dummyMinPrice,
-        maxPrice: dummyMaxPrice,
+        candidates: analysisResult?.success == true ? analysisResult?.candidates : null,
       );
 
       if (mounted) {
@@ -130,22 +126,19 @@ class _ValueSearchCreateContainerState
 
   void _resetForm() {
     setState(() {
-      _title = '';
       _detail = null;
       _imagePaths.clear();
-      _status = ItemKeepStatus.keeping;
+      _status = ItemKeepStatus.considering;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueSearchCreatePage(
-      title: _title,
       detail: _detail,
       status: _status,
       imagePaths: _imagePaths,
       isLoading: _isLoading,
-      onTitleChanged: (value) => setState(() => _title = value),
       onDetailChanged: (value) =>
           setState(() => _detail = value.isEmpty ? null : value),
       onStatusChanged: (status) => setState(() => _status = status),

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
-import '../../../../../core/models/DB/memory_status.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
 
-class StatusCard extends StatelessWidget {
-  final MemoryStatus status;
-  final Function(MemoryStatus) onStatusChanged;
+class ValueStatusCard extends StatelessWidget {
+  final ItemKeepStatus status;
+  final Function(ItemKeepStatus) onStatusChanged;
 
-  const StatusCard({
+  const ValueStatusCard({
     super.key,
     required this.status,
     required this.onStatusChanged,
@@ -16,7 +16,7 @@ class StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      shadowColor: AppColors.accentHeart.withOpacity(0.2),
+      shadowColor: AppColors.primary.withOpacity(0.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -32,13 +32,13 @@ class StatusCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.inventory,
+                  Icons.inventory_2,
                   color: AppColors.primary,
                   size: 24,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '思い出をどうする？',
+                  '商品はどうする？',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
@@ -47,7 +47,7 @@ class StatusCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             _buildStatusOptions(),
           ],
         ),
@@ -59,19 +59,19 @@ class StatusCard extends StatelessWidget {
     return Column(
       children: [
         _buildStatusOption(
-          title: '保管する',
-          subtitle: '手元におく思い出の品',
-          icon: Icons.home,
-          value: MemoryStatus.keeping,
-          isSelected: status == MemoryStatus.keeping,
+          title: '検討中',
+          subtitle: '売却を検討している商品',
+          icon: Icons.help_outline,
+          value: ItemKeepStatus.considering,
+          isSelected: status == ItemKeepStatus.considering,
         ),
         const SizedBox(height: 12),
         _buildStatusOption(
-          title: '処分する',
-          subtitle: '手放す思い出の品',
+          title: '売却する',
+          subtitle: '売却予定の商品',
           icon: Icons.check_circle,
-          value: MemoryStatus.disposed,
-          isSelected: status == MemoryStatus.disposed,
+          value: ItemKeepStatus.disposed,
+          isSelected: status == ItemKeepStatus.disposed,
         ),
       ],
     );
@@ -81,7 +81,7 @@ class StatusCard extends StatelessWidget {
     required String title,
     required String subtitle,
     required IconData icon,
-    required MemoryStatus value,
+    required ItemKeepStatus value,
     required bool isSelected,
   }) {
     return GestureDetector(

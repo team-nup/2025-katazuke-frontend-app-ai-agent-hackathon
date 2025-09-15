@@ -3,26 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http_parser/http_parser.dart';
-
-class ProductCandidate {
-  final int rank;
-  final String name;
-  final double confidence;
-
-  ProductCandidate({
-    required this.rank,
-    required this.name,
-    required this.confidence,
-  });
-
-  factory ProductCandidate.fromJson(Map<String, dynamic> json) {
-    return ProductCandidate(
-      rank: json['rank'] ?? 0,
-      name: json['name'] ?? '',
-      confidence: (json['confidence'] ?? 0.0).toDouble(),
-    );
-  }
-}
+import 'package:okataduke/core/models/service/product_candidate.dart';
 
 class GeminiAnalyzeResponse {
   final List<ProductCandidate> candidates;

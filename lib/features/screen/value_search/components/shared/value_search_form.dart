@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/item_keep_status.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
+import 'package:okataduke/features/components/photo_section_card.dart';
+import 'product_hint_card.dart';
+import 'value_status_card.dart';
 
 class ValueSearchForm extends StatelessWidget {
-  final String title;
   final String? detail;
   final ItemKeepStatus status;
-  final Function(String) onTitleChanged;
+  final List<String> imagePaths;
   final Function(String) onDetailChanged;
   final Function(ItemKeepStatus) onStatusChanged;
+  final VoidCallback onAddPhoto;
+  final VoidCallback? onPickFromGallery;
+  final Function(int)? onRemovePhoto;
 
   const ValueSearchForm({
     super.key,
-    required this.title,
     this.detail,
     required this.status,
-    required this.onTitleChanged,
+    required this.imagePaths,
     required this.onDetailChanged,
     required this.onStatusChanged,
+    required this.onAddPhoto,
+    this.onPickFromGallery,
+    this.onRemovePhoto,
   });
 
   @override
@@ -24,63 +32,51 @@ class ValueSearchForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
-          initialValue: title,
-          decoration: const InputDecoration(labelText: 'アイテム名'),
-          onChanged: onTitleChanged,
+        PhotoSectionCard(
+          title: 'どんな商品？',
+          imagePaths: imagePaths,
+          onAddPhoto: onAddPhoto,
+          onPickFromGallery: onPickFromGallery,
+          onRemovePhoto: onRemovePhoto,
         ),
-        TextFormField(
-          initialValue: detail ?? '',
-          decoration: const InputDecoration(labelText: '詳細・メモ'),
-          onChanged: onDetailChanged,
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
         ),
         const SizedBox(height: 16),
-        Text(
-          'ステータス',
-          style: Theme.of(context).textTheme.titleMedium,
+        ProductHintCard(
+          detail: detail,
+          onDetailChanged: onDetailChanged,
         ),
-        const SizedBox(height: 8),
-        _buildStatusRadios(),
-      ],
-    );
-  }
-
-  Widget _buildStatusRadios() {
-    return Column(
-      children: [
-        RadioListTile<ItemKeepStatus>(
-          title: const Text('保管中'),
-          subtitle: const Text('まだ手元にあるアイテム'),
-          value: ItemKeepStatus.keeping,
-          groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
-            if (value != null) {
-              onStatusChanged(value);
-            }
-          },
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
         ),
-        RadioListTile<ItemKeepStatus>(
-          title: const Text('検討中'),
-          subtitle: const Text('処分を検討しているアイテム'),
-          value: ItemKeepStatus.considering,
-          groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
-            if (value != null) {
-              onStatusChanged(value);
-            }
-          },
+        const SizedBox(height: 16),
+        ValueStatusCard(
+          status: status,
+          onStatusChanged: onStatusChanged,
         ),
-        RadioListTile<ItemKeepStatus>(
-          title: const Text('処分済み'),
-          subtitle: const Text('既に手放したアイテム（処分日を自動記録）'),
-          value: ItemKeepStatus.disposed,
-          groupValue: status,
-          onChanged: (ItemKeepStatus? value) {
-            if (value != null) {
-              onStatusChanged(value);
-            }
-          },
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }

@@ -112,7 +112,8 @@ class RecordCreatePage extends StatelessWidget {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                          Icon(Icons.save, size: 20),
+                          Icon(Icons.save,
+                              size: 20, color: AppColors.iconGreen),
                           SizedBox(width: 8),
                           Text('思い出を保存'),
                         ],

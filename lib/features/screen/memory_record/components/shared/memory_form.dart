@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/models/DB/memory_status.dart';
-import 'basic_info_card.dart';
-import 'age_card.dart';
-import 'status_card.dart';
+import 'package:okataduke/core/models/DB/memory_status.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
+import 'package:okataduke/features/screen/memory_record/components/shared/basic_info_card.dart';
+import 'package:okataduke/features/screen/memory_record/components/shared/age_card.dart';
+import 'package:okataduke/features/screen/memory_record/components/shared/status_card.dart';
+import 'package:okataduke/features/components/photo_section_card.dart';
 
 class MemoryForm extends StatelessWidget {
   final String title;
@@ -43,19 +45,37 @@ class MemoryForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BasicInfoCard(
-          title: title,
-          detail: detail,
+        PhotoSectionCard(
+          title: '写真で思い出を残す？',
           imagePaths: imagePaths,
-          onTitleChanged: onTitleChanged,
-          onDetailChanged: onDetailChanged,
           onAddPhoto: onAddPhoto,
           onPickFromGallery: onPickFromGallery,
           onRemovePhoto: onRemovePhoto,
         ),
-        Text(
-          "↓",
-          style: TextStyle(fontSize: 24),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
+        ),
+        const SizedBox(height: 16),
+        BasicInfoCard(
+          title: title,
+          detail: detail,
+          onTitleChanged: onTitleChanged,
+          onDetailChanged: onDetailChanged,
+        ),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
         ),
         const SizedBox(height: 16),
         AgeCard(
@@ -64,9 +84,14 @@ class MemoryForm extends StatelessWidget {
           onStartAgeChanged: onStartAgeChanged,
           onEndAgeChanged: onEndAgeChanged,
         ),
-        Text(
-          "↓",
-          style: TextStyle(fontSize: 24),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.keyboard_arrow_down,
+            size: 32,
+            color: AppColors.primary.withOpacity(0.6),
+          ),
         ),
         const SizedBox(height: 16),
         StatusCard(

@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/item_keep_status.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 import '../components/shared/value_search_form.dart';
-import '../../../components/photo_section.dart';
 import '../../../components/app_bar.dart';
-import 'url_search_test_page.dart';
 
 class ValueSearchCreatePage extends StatelessWidget {
-  final String title;
   final String? detail;
   final ItemKeepStatus status;
   final List<String> imagePaths;
   final bool isLoading;
 
   // Callbacks
-  final ValueChanged<String> onTitleChanged;
   final ValueChanged<String> onDetailChanged;
   final ValueChanged<ItemKeepStatus> onStatusChanged;
   final VoidCallback onAddPhoto;
@@ -23,12 +20,10 @@ class ValueSearchCreatePage extends StatelessWidget {
 
   const ValueSearchCreatePage({
     super.key,
-    required this.title,
     this.detail,
     required this.status,
     required this.imagePaths,
     required this.isLoading,
-    required this.onTitleChanged,
     required this.onDetailChanged,
     required this.onStatusChanged,
     required this.onAddPhoto,
@@ -40,6 +35,7 @@ class ValueSearchCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: const AppBarComponent(
         title: '価値を調べる',
         titleIcon: Icons.search,
@@ -51,15 +47,11 @@ class ValueSearchCreatePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ValueSearchForm(
-              title: title,
               detail: detail,
               status: status,
-              onTitleChanged: onTitleChanged,
+              imagePaths: imagePaths,
               onDetailChanged: onDetailChanged,
               onStatusChanged: onStatusChanged,
-            ),
-            PhotoSection(
-              imagePaths: imagePaths,
               onAddPhoto: onAddPhoto,
               onPickFromGallery: onPickFromGallery,
               onRemovePhoto: onRemovePhoto,
@@ -69,22 +61,39 @@ class ValueSearchCreatePage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: isLoading ? null : onSave,
-                child: isLoading ? const Text('分析中...') : const Text('価値を分析'),
-              ),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const UrlSearchTestPage(),
-                    ),
-                  );
-                },
-                child: const Text('URL検索テスト'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textOnPrimary,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 2,
+                ),
+                child: isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.search,
+                              size: 20, color: AppColors.iconGreen),
+                          SizedBox(width: 8),
+                          Text(
+                            '価値を調べる',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ],

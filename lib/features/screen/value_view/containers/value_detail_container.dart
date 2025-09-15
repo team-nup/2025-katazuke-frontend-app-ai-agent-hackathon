@@ -38,7 +38,7 @@ class _ValueDetailContainerState extends State<ValueDetailContainer> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('削除確認'),
-        content: Text('「${_currentValue.title}」を削除しますか？'),
+        content: Text('「${_currentValue.detectedProductName ?? '不明な商品'}」を削除しますか？'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),

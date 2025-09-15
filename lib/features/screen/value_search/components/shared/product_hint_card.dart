@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
 
-class BasicInfoCard extends StatelessWidget {
-  final String title;
+class ProductHintCard extends StatelessWidget {
   final String? detail;
-  final Function(String) onTitleChanged;
   final Function(String) onDetailChanged;
 
-  const BasicInfoCard({
+  const ProductHintCard({
     super.key,
-    required this.title,
     this.detail,
-    required this.onTitleChanged,
     required this.onDetailChanged,
   });
 
@@ -35,13 +31,13 @@ class BasicInfoCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.edit,
+                  Icons.search,
                   color: AppColors.primary,
                   size: 24,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'どんな思い出？',
+                  '商品名の手がかりはある？',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -50,20 +46,12 @@ class BasicInfoCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            _buildStyledTextField(
-              initialValue: title,
-              labelText: 'タイトル',
-              hintText: '例：小学生の時のランドセル',
-              icon: Icons.title,
-              onChanged: onTitleChanged,
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             _buildStyledTextField(
               initialValue: detail ?? '',
-              labelText: '詳細・思い出',
-              hintText: 'この品物にまつわる思い出やエピソードを書いてください',
-              icon: Icons.description,
+              labelText: '',
+              hintText: 'どこで買った？何に使ってたなど...',
+              icon: Icons.edit_note,
               maxLines: 3,
               onChanged: onDetailChanged,
             ),
