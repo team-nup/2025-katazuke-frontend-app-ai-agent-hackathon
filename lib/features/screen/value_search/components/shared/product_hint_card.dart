@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
-import 'package:okataduke/features/components/photo_section_card.dart';
 
-class BasicInfoCard extends StatelessWidget {
-  final String title;
+class ProductHintCard extends StatelessWidget {
   final String? detail;
-  final Function(String) onTitleChanged;
   final Function(String) onDetailChanged;
-  final List<String> imagePaths;
-  final VoidCallback onAddPhoto;
-  final VoidCallback? onPickFromGallery;
-  final Function(int)? onRemovePhoto;
 
-  const BasicInfoCard({
+  const ProductHintCard({
     super.key,
-    required this.title,
     this.detail,
-    required this.onTitleChanged,
     required this.onDetailChanged,
-    required this.imagePaths,
-    required this.onAddPhoto,
-    this.onPickFromGallery,
-    this.onRemovePhoto,
   });
 
   @override
@@ -44,49 +31,29 @@ class BasicInfoCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.edit,
+                  Icons.search,
                   color: AppColors.primary,
                   size: 24,
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'どんな思い出？',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
-                      ),
+                  '商品につながる手がかり',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            _buildStyledTextField(
-              initialValue: title,
-              labelText: 'タイトル',
-              hintText: '例：小学生の時のランドセル',
-              icon: Icons.title,
-              onChanged: onTitleChanged,
-            ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             _buildStyledTextField(
               initialValue: detail ?? '',
-              labelText: '詳細・思い出',
-              hintText: 'この品物にまつわる思い出やエピソードを書いてください',
-              icon: Icons.description,
+              labelText: '',
+              hintText: 'どこで買った？何に使ってたなど...',
+              icon: Icons.edit_note,
               maxLines: 3,
               onChanged: onDetailChanged,
-            ),
-            const SizedBox(height: 24),
-            Divider(
-              color: AppColors.textDisabled.withOpacity(0.3),
-              thickness: 1,
-            ),
-            const SizedBox(height: 16),
-            PhotoSectionCard(
-              title: '写真を追加',
-              imagePaths: imagePaths,
-              onAddPhoto: onAddPhoto,
-              onPickFromGallery: onPickFromGallery,
-              onRemovePhoto: onRemovePhoto,
             ),
           ],
         ),
@@ -146,5 +113,4 @@ class BasicInfoCard extends StatelessWidget {
       ),
     );
   }
-
 }

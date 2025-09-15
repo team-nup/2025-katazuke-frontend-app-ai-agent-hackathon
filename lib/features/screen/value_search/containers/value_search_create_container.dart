@@ -19,7 +19,7 @@ class _ValueSearchCreateContainerState
     extends State<ValueSearchCreateContainer> {
   String? _detail;
   List<String> _imagePaths = [];
-  ItemKeepStatus _status = ItemKeepStatus.keeping;
+  ItemKeepStatus _status = ItemKeepStatus.considering;
 
   bool _isLoading = false;
 
@@ -128,7 +128,7 @@ class _ValueSearchCreateContainerState
     setState(() {
       _detail = null;
       _imagePaths.clear();
-      _status = ItemKeepStatus.keeping;
+      _status = ItemKeepStatus.considering;
     });
   }
 

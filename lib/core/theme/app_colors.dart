@@ -25,6 +25,9 @@ class AppColors {
   static const Color warning = Color(0xFFFF9800); // Orange 500
   static const Color error = Color(0xFFF44336); // Red 500
 
+  // Icon Colors
+  static const Color iconGreen = Color.fromARGB(255, 0, 104, 0); // Dark Green for icons
+
   // Text Colors
   static const Color textPrimary = Color(0xFF212121); // Grey 900
   static const Color textSecondary = Color(0xFF757575); // Grey 600

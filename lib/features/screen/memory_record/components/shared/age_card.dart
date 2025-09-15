@@ -138,7 +138,7 @@ class AgeCard extends StatelessWidget {
           ),
           prefixIcon: Icon(
             icon,
-            color: AppColors.secondary,
+            color: AppColors.iconGreen,
           ),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
