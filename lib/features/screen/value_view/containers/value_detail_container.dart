@@ -3,6 +3,7 @@ import 'package:okataduke/core/database/repositories/value_search_repository.dar
 import 'package:okataduke/core/database/repositories/candidate_product_name_repository.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
 import 'package:okataduke/core/models/DB/candidate_product_name.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import '../utils/detail/search_url_launcher.dart';
 
 import '../pages/value_detail_page.dart';
@@ -21,7 +22,7 @@ class ValueDetailContainer extends StatefulWidget {
 
 class _ValueDetailContainerState extends State<ValueDetailContainer> {
   late ValueSearch _currentValue;
-  final bool _hasBeenUpdated = false;
+  bool _hasBeenUpdated = false;
   List<CandidateProductName> _candidateNames = [];
 
   @override
@@ -96,6 +97,41 @@ class _ValueDetailContainerState extends State<ValueDetailContainer> {
     }
   }
 
+  void _onStatusChanged(ItemKeepStatus status) {
+    setState(() {
+      _currentValue = _currentValue.copyWith(status: status);
+    });
+  }
+
+  Future<void> _onSave(ItemKeepStatus status, int? price) async {
+    try {
+      final updatedValue = _currentValue.copyWith(
+        status: status,
+        value: price,
+      );
+
+      await ValueSearchRepository.update(updatedValue);
+
+      setState(() {
+        _currentValue = updatedValue;
+        _hasBeenUpdated = true;
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('保存しました')),
+        );
+        Navigator.of(context).pop(true);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('保存エラー: $e')),
+        );
+      }
+    }
+  }
+
   void _onPopInvoked(bool didPop, dynamic result) {
     if (!didPop) {
       Navigator.of(context).pop(_hasBeenUpdated);
@@ -112,6 +148,8 @@ class _ValueDetailContainerState extends State<ValueDetailContainer> {
       onPopInvoked: _onPopInvoked,
       onLaunchSearchUrl: (productName, platform) =>
           SearchUrlLauncher.launchSearchUrl(productName, platform, context),
+      onStatusChanged: _onStatusChanged,
+      onSave: _onSave,
     );
   }
 }
