@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/database/repositories/value_search_repository.dart';
+import 'package:okataduke/core/database/repositories/candidate_product_name_repository.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
+import 'package:okataduke/core/models/DB/candidate_product_name.dart';
+import '../utils/detail/search_url_launcher.dart';
 
 import '../pages/value_detail_page.dart';
 
@@ -19,11 +22,26 @@ class ValueDetailContainer extends StatefulWidget {
 class _ValueDetailContainerState extends State<ValueDetailContainer> {
   late ValueSearch _currentValue;
   final bool _hasBeenUpdated = false;
+  List<CandidateProductName> _candidateNames = [];
 
   @override
   void initState() {
     super.initState();
     _currentValue = widget.valueSearch;
+    _loadCandidateNames();
+  }
+
+  Future<void> _loadCandidateNames() async {
+    try {
+      final candidates =
+          await CandidateProductNameRepository.findByValueSearchId(
+              _currentValue.id);
+      setState(() {
+        _candidateNames = candidates;
+      });
+    } catch (e) {
+      print('商品名候補の読み込みエラー: $e');
+    }
   }
 
   Future<void> _navigateToEdit() async {
@@ -38,7 +56,8 @@ class _ValueDetailContainerState extends State<ValueDetailContainer> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('削除確認'),
-        content: Text('「${_currentValue.detectedProductName ?? '不明な商品'}」を削除しますか？'),
+        content:
+            Text('「${_currentValue.detectedProductName ?? '不明な商品'}」を削除しますか？'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -87,9 +106,12 @@ class _ValueDetailContainerState extends State<ValueDetailContainer> {
   Widget build(BuildContext context) {
     return ValueDetailPage(
       valueSearch: _currentValue,
+      candidateNames: _candidateNames,
       onEdit: _navigateToEdit,
       onDelete: _showDeleteConfirmDialog,
       onPopInvoked: _onPopInvoked,
+      onLaunchSearchUrl: (productName, platform) =>
+          SearchUrlLauncher.launchSearchUrl(productName, platform, context),
     );
   }
 }
