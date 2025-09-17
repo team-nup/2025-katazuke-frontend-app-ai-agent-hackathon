@@ -16,11 +16,15 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 2;
 
-  final List<Widget> _pages = [
+  List<Widget> get _pages => [
     const MemoryListContainer(),
-    const RecordCreateContainer(),
+    RecordCreateContainer(
+      onSaved: () => setState(() => _currentIndex = 0),
+    ),
     const HomeContainer(),
-    const ValueSearchCreateContainer(),
+    ValueSearchCreateContainer(
+      onSaved: () => setState(() => _currentIndex = 4),
+    ),
     const ValueListContainer(),
   ];
 

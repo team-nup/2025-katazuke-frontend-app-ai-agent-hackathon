@@ -61,9 +61,6 @@ class ValueInfo extends StatelessWidget {
               currentStatus: valueSearch.status,
               onStatusChanged: onStatusChanged,
             ),
-            if (valueSearch.disposedAt != null) ...[
-              _buildInfoRow('処分日時', _formatDate(valueSearch.disposedAt!)),
-            ],
           ],
         ),
       ),
@@ -98,10 +95,6 @@ class ValueInfo extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-  }
-
   Widget _buildPriceInput() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,15 +117,15 @@ class ValueInfo extends StatelessWidget {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             filled: true,
             fillColor: Colors.white,

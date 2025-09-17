@@ -8,7 +8,12 @@ import 'package:okataduke/features/screen/value_search/utils/shared/value_search
 import 'package:okataduke/features/screen/value_search/utils/shared/product_analysis_service.dart';
 
 class ValueSearchCreateContainer extends StatefulWidget {
-  const ValueSearchCreateContainer({super.key});
+  final VoidCallback? onSaved;
+
+  const ValueSearchCreateContainer({
+    super.key,
+    this.onSaved,
+  });
 
   @override
   State<ValueSearchCreateContainer> createState() =>
@@ -85,19 +90,16 @@ class _ValueSearchCreateContainerState
         status: _status,
         detectedProductName: dummyProductName,
         aiConfidenceScore: dummyConfidence,
-        candidates: analysisResult?.success == true ? analysisResult?.candidates : null,
+        candidates:
+            analysisResult?.success == true ? analysisResult?.candidates : null,
       );
 
       if (mounted) {
         ToastHelper.showCreateSuccess(context);
-        _resetForm();
+        widget.onSaved?.call();
       }
     } catch (e) {
       print('Value search error: $e');
-      if (mounted) {
-        ToastHelper.showError(
-            context, e.toString().replaceFirst('Exception: ', ''));
-      }
     } finally {
       if (mounted) {
         setState(() {
@@ -122,14 +124,6 @@ class _ValueSearchCreateContainerState
     ];
     final random = Random();
     return products[random.nextInt(products.length)];
-  }
-
-  void _resetForm() {
-    setState(() {
-      _detail = null;
-      _imagePaths.clear();
-      _status = ItemKeepStatus.considering;
-    });
   }
 
   @override
