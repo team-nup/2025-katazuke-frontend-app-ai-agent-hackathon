@@ -1,56 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/models/DB/value_search.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
+import 'package:okataduke/core/models/DB/item_keep_status.dart';
+import 'status_selector.dart';
 
 class ValueInfo extends StatelessWidget {
   final ValueSearch valueSearch;
+  final Function(ItemKeepStatus)? onStatusChanged;
+  final Function(int?)? onPriceChanged;
 
   const ValueInfo({
     super.key,
     required this.valueSearch,
+    this.onStatusChanged,
+    this.onPriceChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      elevation: 8,
+      shadowColor: AppColors.accentHeart.withOpacity(0.2),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.surface,
+        ),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              valueSearch.detectedProductName ?? '不明な商品',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '推測された商品名',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey[600],
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
+                Text(
+                  valueSearch.detectedProductName ?? '不明な商品',
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 4),
+              ],
             ),
             const SizedBox(height: 16),
-            if (valueSearch.productNameHint != null) ...[
-              _buildInfoRow('商品名ヒント', valueSearch.productNameHint!),
-              const SizedBox(height: 8),
-            ],
-            if (valueSearch.detectedProductName != null) ...[
-              _buildInfoRow('商品名', valueSearch.detectedProductName!),
-              const SizedBox(height: 8),
-            ],
             if (valueSearch.value != null) ...[
-              _buildInfoRow(
-                '推定価値',
-                '¥${valueSearch.value!.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-                valueColor: Colors.green[700],
-              ),
-              const SizedBox(height: 8),
+              _buildPriceInput(),
+              const SizedBox(height: 16),
             ],
-            if (valueSearch.aiConfidenceScore != null) ...[
-              _buildInfoRow('AI信頼度', '${valueSearch.aiConfidenceScore}%'),
-              const SizedBox(height: 8),
-            ],
-            _buildInfoRow('ステータス', _getStatusText(valueSearch.status)),
-            const SizedBox(height: 8),
+            StatusSelector(
+              currentStatus: valueSearch.status,
+              onStatusChanged: onStatusChanged,
+            ),
             if (valueSearch.disposedAt != null) ...[
               _buildInfoRow('処分日時', _formatDate(valueSearch.disposedAt!)),
-              const SizedBox(height: 8),
             ],
-            _buildInfoRow('登録日時', _formatDate(valueSearch.insertedAt)),
           ],
         ),
       ),
@@ -89,19 +102,55 @@ class ValueInfo extends StatelessWidget {
     return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
 
-  String _formatPrice(int price) {
-    return price.toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-  }
-
-  String _getStatusText(dynamic status) {
-    switch (status.toString()) {
-      case 'ItemKeepStatus.keeping':
-        return '保管中';
-      case 'ItemKeepStatus.disposed':
-        return '処分済';
-      default:
-        return '保管中';
-    }
+  Widget _buildPriceInput() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'およその価格',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          initialValue: valueSearch.value?.toString() ?? '',
+          decoration: InputDecoration(
+            prefixText: '¥ ',
+            prefixStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          ),
+          keyboardType: TextInputType.number,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+          onChanged: (value) {
+            final price = int.tryParse(value);
+            onPriceChanged?.call(price);
+          },
+        ),
+      ],
+    );
   }
 }
