@@ -17,16 +17,16 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 2;
 
   List<Widget> get _pages => [
-    const MemoryListContainer(),
-    RecordCreateContainer(
-      onSaved: () => setState(() => _currentIndex = 0),
-    ),
-    const HomeContainer(),
-    ValueSearchCreateContainer(
-      onSaved: () => setState(() => _currentIndex = 4),
-    ),
-    const ValueListContainer(),
-  ];
+        const MemoryListContainer(),
+        RecordCreateContainer(
+          onSaved: () => setState(() => _currentIndex = 0),
+        ),
+        const HomeContainer(),
+        ValueSearchCreateContainer(
+          onSaved: () => setState(() => _currentIndex = 4),
+        ),
+        const ValueListContainer(),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
             label: '価値検索',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+            icon: Icon(Icons.attach_money),
             label: '売却管理',
           ),
         ],

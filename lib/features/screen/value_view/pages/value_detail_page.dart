@@ -68,7 +68,7 @@ class _ValueDetailPageState extends State<ValueDetailPage> {
       onPopInvokedWithResult: widget.onPopInvoked,
       child: Scaffold(
         appBar: AppBarComponent(
-          title: '価値詳細',
+          title: '商品詳細',
           titleIcon: Icons.info,
           showBackButton: true,
           actions: [
