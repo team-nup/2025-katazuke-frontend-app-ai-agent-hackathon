@@ -11,7 +11,7 @@ class ValueSearchService {
   static Future<String> createValueSearch({
     String? productNameHint,
     required List<String> imagePaths,
-    required int value,
+    int? value,
     required ItemKeepStatus status,
     required String detectedProductName,
     required int aiConfidenceScore,

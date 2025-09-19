@@ -20,7 +20,7 @@ class ValueInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      shadowColor: AppColors.accentHeart.withOpacity(0.2),
+      shadowColor: AppColors.primary.withOpacity(0.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -53,53 +53,16 @@ class ValueInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            if (valueSearch.value != null) ...[
-              _buildPriceInput(),
-              const SizedBox(height: 16),
-            ],
+            _buildPriceInput(),
+            const SizedBox(height: 16),
             StatusSelector(
               currentStatus: valueSearch.status,
               onStatusChanged: onStatusChanged,
             ),
-            if (valueSearch.disposedAt != null) ...[
-              _buildInfoRow('処分日時', _formatDate(valueSearch.disposedAt!)),
-            ],
           ],
         ),
       ),
     );
-  }
-
-  Widget _buildInfoRow(String label, String value, {Color? valueColor}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 100,
-          child: Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              color: valueColor,
-              fontWeight: valueColor != null ? FontWeight.bold : null,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
 
   Widget _buildPriceInput() {
@@ -124,15 +87,15 @@ class ValueInfo extends StatelessWidget {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             filled: true,
             fillColor: Colors.white,

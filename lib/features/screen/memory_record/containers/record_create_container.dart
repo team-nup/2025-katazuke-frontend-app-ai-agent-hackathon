@@ -6,7 +6,12 @@ import '../utils/shared/memory_service.dart';
 import '../utils/shared/toast_helper.dart';
 
 class RecordCreateContainer extends StatefulWidget {
-  const RecordCreateContainer({super.key});
+  final VoidCallback? onSaved;
+
+  const RecordCreateContainer({
+    super.key,
+    this.onSaved,
+  });
 
   @override
   State<RecordCreateContainer> createState() => _RecordCreateContainerState();
@@ -64,12 +69,11 @@ class _RecordCreateContainerState extends State<RecordCreateContainer> {
 
       if (mounted) {
         ToastHelper.showCreateSuccess(context);
-        _resetForm();
+        widget.onSaved?.call();
       }
     } catch (e) {
       if (mounted) {
-        ToastHelper.showError(
-            context, e.toString().replaceFirst('Exception: ', ''));
+        debugPrint('Error saving memory: $e');
       }
     } finally {
       if (mounted) {
@@ -78,17 +82,6 @@ class _RecordCreateContainerState extends State<RecordCreateContainer> {
         });
       }
     }
-  }
-
-  void _resetForm() {
-    setState(() {
-      _title = '';
-      _detail = null;
-      _startAge = null;
-      _endAge = null;
-      _imagePaths.clear();
-      _status = MemoryStatus.disposed;
-    });
   }
 
   @override

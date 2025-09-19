@@ -6,7 +6,14 @@ import '../../memory_view/containers/memory_detail_container.dart';
 import '../pages/home_page.dart';
 
 class HomeContainer extends StatefulWidget {
-  const HomeContainer({super.key});
+  final VoidCallback? onNavigateToMemoryRecord;
+  final VoidCallback? onNavigateToValueSearch;
+
+  const HomeContainer({
+    super.key,
+    this.onNavigateToMemoryRecord,
+    this.onNavigateToValueSearch,
+  });
 
   @override
   State<HomeContainer> createState() => _HomeContainerState();
@@ -79,6 +86,8 @@ class _HomeContainerState extends State<HomeContainer> {
       isLoading: _isLoading,
       onRefresh: _loadStatistics,
       onMemoryTap: _onMemoryTap,
+      onNavigateToMemoryRecord: widget.onNavigateToMemoryRecord,
+      onNavigateToValueSearch: widget.onNavigateToValueSearch,
     );
   }
 }
