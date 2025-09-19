@@ -63,7 +63,7 @@ class DatabaseMigration {
         id TEXT PRIMARY KEY,
         product_name_hint TEXT,
         image_paths TEXT NOT NULL,
-        value INTEGER NOT NULL,
+        value INTEGER,
         status TEXT DEFAULT 'keeping',
         detected_product_name TEXT NOT NULL,
         ai_confidence_score INTEGER NOT NULL,

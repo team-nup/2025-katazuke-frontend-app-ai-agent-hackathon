@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import 'package:okataduke/features/screen/memory_record/utils/shared/image_picker_helper.dart';
 import 'package:okataduke/features/screen/memory_record/utils/shared/toast_helper.dart';
@@ -57,41 +56,29 @@ class _ValueSearchCreateContainerState
     });
 
     try {
-      String dummyProductName;
-      int dummyConfidence;
-      ProductAnalysisResult? analysisResult;
-
-      if (_imagePaths.isNotEmpty) {
-        analysisResult = await ProductAnalysisService.analyzeProduct(
-          imagePath: _imagePaths[0],
-          userHint: _detail,
-        );
-
-        if (analysisResult.success) {
-          dummyProductName = analysisResult.productName;
-          dummyConfidence = analysisResult.confidence;
-        } else {
-          print('Product analysis error: ${analysisResult.error}');
-          dummyProductName = _generateDummyProductName();
-          dummyConfidence = Random().nextInt(40) + 60;
-        }
-      } else {
-        dummyProductName = _generateDummyProductName();
-        dummyConfidence = Random().nextInt(40) + 60;
+      if (_imagePaths.isEmpty) {
+        ToastHelper.showError(context, '画像を選択してください');
+        return;
       }
 
-      final random = Random();
-      final dummyValue = random.nextInt(50000) + 1000;
+      final analysisResult = await ProductAnalysisService.analyzeProduct(
+        imagePath: _imagePaths[0],
+        userHint: _detail,
+      );
+
+      if (!analysisResult.success) {
+        ToastHelper.showError(context, 'AI分析に失敗しました: ${analysisResult.error}');
+        return;
+      }
 
       await ValueSearchService.createValueSearch(
         productNameHint: _detail,
         imagePaths: _imagePaths,
-        value: dummyValue,
+        value: null,
         status: _status,
-        detectedProductName: dummyProductName,
-        aiConfidenceScore: dummyConfidence,
-        candidates:
-            analysisResult?.success == true ? analysisResult?.candidates : null,
+        detectedProductName: analysisResult.productName,
+        aiConfidenceScore: analysisResult.confidence,
+        candidates: analysisResult.candidates,
       );
 
       if (mounted) {
@@ -109,22 +96,6 @@ class _ValueSearchCreateContainerState
     }
   }
 
-  String _generateDummyProductName() {
-    final products = [
-      'ヴィンテージ腕時計',
-      'レトロカメラ',
-      'アンティーク花瓶',
-      'ブランドバッグ',
-      'コレクション本',
-      'ゲーム機',
-      'フィギュア',
-      'ジュエリー',
-      '絵画',
-      '楽器',
-    ];
-    final random = Random();
-    return products[random.nextInt(products.length)];
-  }
 
   @override
   Widget build(BuildContext context) {

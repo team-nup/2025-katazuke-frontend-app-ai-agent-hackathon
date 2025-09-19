@@ -67,15 +67,6 @@ class ValueSearchForm extends StatelessWidget {
           status: status,
           onStatusChanged: onStatusChanged,
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          alignment: Alignment.center,
-          child: Icon(
-            Icons.keyboard_arrow_down,
-            size: 32,
-            color: AppColors.primary.withOpacity(0.6),
-          ),
-        ),
         const SizedBox(height: 16),
       ],
     );
