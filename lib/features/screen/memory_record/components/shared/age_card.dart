@@ -241,7 +241,7 @@ class _AgeCardState extends State<AgeCard> {
   Widget _buildAgeInputFields() {
     return Row(
       children: [
-        Expanded(
+        Flexible(
           child: _buildStyledTextField(
             controller: _startAgeController,
             labelText: '開始年齢',
@@ -251,14 +251,14 @@ class _AgeCardState extends State<AgeCard> {
             onChanged: widget.onStartAgeChanged,
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: 12),
         Icon(
           Icons.arrow_forward,
           color: AppColors.textSecondary,
           size: 20,
         ),
-        const SizedBox(width: 16),
-        Expanded(
+        const SizedBox(width: 12),
+        Flexible(
           child: _buildStyledTextField(
             controller: _endAgeController,
             labelText: '終了年齢',
