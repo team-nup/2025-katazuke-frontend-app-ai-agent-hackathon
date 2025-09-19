@@ -21,7 +21,10 @@ class _MainScreenState extends State<MainScreen> {
         RecordCreateContainer(
           onSaved: () => setState(() => _currentIndex = 0),
         ),
-        const HomeContainer(),
+        HomeContainer(
+          onNavigateToMemoryRecord: () => setState(() => _currentIndex = 1),
+          onNavigateToValueSearch: () => setState(() => _currentIndex = 3),
+        ),
         ValueSearchCreateContainer(
           onSaved: () => setState(() => _currentIndex = 4),
         ),

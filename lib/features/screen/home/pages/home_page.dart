@@ -12,6 +12,8 @@ class HomePage extends StatelessWidget {
   final bool isLoading;
   final VoidCallback onRefresh;
   final Function(Memory) onMemoryTap;
+  final VoidCallback? onNavigateToMemoryRecord;
+  final VoidCallback? onNavigateToValueSearch;
 
   const HomePage({
     super.key,
@@ -20,6 +22,8 @@ class HomePage extends StatelessWidget {
     required this.isLoading,
     required this.onRefresh,
     required this.onMemoryTap,
+    this.onNavigateToMemoryRecord,
+    this.onNavigateToValueSearch,
   });
 
   @override
@@ -38,14 +42,14 @@ class HomePage extends StatelessWidget {
             AnalyticsCard(statistics: statistics),
             const SizedBox(height: 24),
             QuickActionsCard(
-              onSaveMemory: () {
-                Navigator.pushNamed(context, '/record/create');
-              },
-              onCheckValue: () {
-                Navigator.pushNamed(context, '/value/search/create');
-              },
+              onSaveMemory: onNavigateToMemoryRecord ?? () {},
+              onCheckValue: onNavigateToValueSearch ?? () {},
               onRandomMemory: () {
-                // ランダム思い出機能は将来実装
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('ランダム思い出機能は将来実装予定です'),
+                  ),
+                );
               },
             ),
             const SizedBox(height: 24),
@@ -61,5 +65,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
 }
