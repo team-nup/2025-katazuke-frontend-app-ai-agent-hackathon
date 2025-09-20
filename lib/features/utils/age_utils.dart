@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AgeCardUtils {
+class AgeUtils {
   static const List<Map<String, dynamic>> ageStages = [
     {'label': 'あかちゃん', 'icon': Icons.child_care, 'age': 2},
     {'label': '子供', 'icon': Icons.face, 'age': 8},
@@ -10,6 +10,22 @@ class AgeCardUtils {
     {'label': '中年', 'icon': Icons.person, 'age': 60},
     {'label': 'シニア', 'icon': Icons.elderly, 'age': 80},
   ];
+
+  /// 年齢からアイコンとラベルを取得する
+  static Map<String, dynamic> getAgeStageInfo(int age) {
+    for (int i = 0; i < ageStages.length; i++) {
+      if (age <= ageStages[i]['age']) {
+        return {
+          'icon': ageStages[i]['icon'],
+          'label': ageStages[i]['label'],
+        };
+      }
+    }
+    return {
+      'icon': ageStages.last['icon'],
+      'label': ageStages.last['label'],
+    };
+  }
 
   static bool isAgeInRange(int age, int? startAge, int? endAge) {
     if (startAge == null && endAge == null) return false;
@@ -49,7 +65,6 @@ class AgeCardUtils {
         onEndAgeChanged(startAge.toString());
       }
     } else {
-      // 既に両方選択されている場合は新しい開始年齢として設定
       onStartAgeChanged(age.toString());
       onEndAgeChanged('');
     }

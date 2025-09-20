@@ -35,7 +35,7 @@ class BasicInfoCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.edit,
+                  Icons.auto_stories,
                   color: AppColors.primary,
                   size: 24,
                 ),
