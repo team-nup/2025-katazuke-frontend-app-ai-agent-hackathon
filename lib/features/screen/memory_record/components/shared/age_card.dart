@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
-import '../../utils/shared/age_card_utils.dart';
+import '../../../../utils/age_utils.dart';
 
 class AgeCard extends StatefulWidget {
   final int? startAge;
@@ -147,19 +147,19 @@ class _AgeCardState extends State<AgeCard> {
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
-            children: AgeCardUtils.ageStages.asMap().entries.map((entry) {
+            children: AgeUtils.ageStages.asMap().entries.map((entry) {
               final index = entry.key;
               final stage = entry.value;
               final age = stage['age'] as int;
-              final isInRange = AgeCardUtils.isAgeInRange(
+              final isInRange = AgeUtils.isAgeInRange(
                   age, widget.startAge, widget.endAge);
-              final isSelected = AgeCardUtils.isAgeSelected(
+              final isSelected = AgeUtils.isAgeSelected(
                   age, widget.startAge, widget.endAge);
 
               return Row(
                 children: [
                   GestureDetector(
-                    onTap: () => AgeCardUtils.onStageSelected(
+                    onTap: () => AgeUtils.onStageSelected(
                       age,
                       widget.startAge,
                       widget.endAge,
@@ -219,12 +219,12 @@ class _AgeCardState extends State<AgeCard> {
                       ],
                     ),
                   ),
-                  if (index < AgeCardUtils.ageStages.length - 1)
+                  if (index < AgeUtils.ageStages.length - 1)
                     Container(
                       width: 30,
                       height: 2,
                       margin: const EdgeInsets.only(bottom: 16),
-                      color: AgeCardUtils.isLineHighlighted(
+                      color: AgeUtils.isLineHighlighted(
                               index, widget.startAge, widget.endAge)
                           ? AppColors.primary
                           : AppColors.textDisabled.withOpacity(0.3),
@@ -388,7 +388,7 @@ class _AgeCardState extends State<AgeCard> {
             ),
           ),
           GestureDetector(
-            onTap: () => AgeCardUtils.clearSelection(
+            onTap: () => AgeUtils.clearSelection(
               widget.onStartAgeChanged,
               widget.onEndAgeChanged,
             ),
