@@ -30,11 +30,6 @@ class MemoryDetailPage extends StatelessWidget {
           showBackButton: true,
           actions: [
             IconButton(
-              onPressed: onEdit,
-              icon: const Icon(Icons.edit),
-              tooltip: '編集',
-            ),
-            IconButton(
               onPressed: onDelete,
               icon: const Icon(Icons.delete),
               tooltip: '削除',
@@ -42,16 +37,18 @@ class MemoryDetailPage extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              MemoryInfo(memory: memory),
               if (memory.imagePaths != null &&
                   memory.imagePaths!.isNotEmpty) ...[
-                const SizedBox(height: 16),
                 MemoryImages(imagePaths: memory.imagePaths!),
+                const SizedBox(height: 16),
               ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: MemoryInfo(memory: memory),
+              ),
             ],
           ),
         ),
