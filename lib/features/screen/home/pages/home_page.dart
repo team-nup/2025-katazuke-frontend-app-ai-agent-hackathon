@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
 import '../../../../core/models/DB/memory.dart';
-import '../components/shared/recent_memories_section.dart';
-import '../components/shared/analytics_card.dart';
-import '../components/shared/quick_actions_card.dart';
+import '../components/home/recent_memories_section.dart';
+import '../components/home/analytics_card.dart';
+import '../components/home/quick_actions_card.dart';
 import '../../../components/app_bar.dart';
 
 class HomePage extends StatelessWidget {
