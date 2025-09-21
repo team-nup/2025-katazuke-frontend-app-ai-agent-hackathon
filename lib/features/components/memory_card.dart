@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:okataduke/core/theme/app_colors.dart';
 import 'package:okataduke/core/models/DB/memory.dart';
+import '../screen/home/utils/age_range_formatter.dart';
+import '../screen/home/utils/date_formatter.dart';
 
 class MemoryCard extends StatelessWidget {
   final Memory memory;
@@ -27,11 +29,11 @@ class MemoryCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           child: Row(
             children: [
               _buildImageSection(),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
               Expanded(
                 child: _buildContentSection(context),
               ),
@@ -45,19 +47,27 @@ class MemoryCard extends StatelessWidget {
 
   Widget _buildImageSection() {
     return Container(
-      width: 56,
-      height: 56,
+      width: 72,
+      height: 72,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
         color: AppColors.primaryLight,
         border: Border.all(
           color: AppColors.primary.withOpacity(0.3),
-          width: 1,
+          width: 2,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: (memory.imagePaths?.isNotEmpty ?? false)
           ? ClipRRect(
-              borderRadius: BorderRadius.circular(7),
+              borderRadius: BorderRadius.circular(10),
               child: Image.file(
                 File(memory.imagePaths!.first),
                 fit: BoxFit.cover,
@@ -74,7 +84,7 @@ class MemoryCard extends StatelessWidget {
     return Icon(
       Icons.photo,
       color: AppColors.primary,
-      size: 28,
+      size: 36,
     );
   }
 
@@ -85,29 +95,14 @@ class MemoryCard extends StatelessWidget {
         Text(
           memory.title,
           style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
             color: AppColors.textPrimary,
           ),
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 4),
-        if (showFullDetails &&
-            memory.detail != null &&
-            memory.detail!.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              memory.detail!,
-              style: TextStyle(
-                fontSize: 13,
-                color: AppColors.textSecondary,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+        const SizedBox(height: 8),
         Row(
           children: [
             Icon(
@@ -117,22 +112,23 @@ class MemoryCard extends StatelessWidget {
             ),
             const SizedBox(width: 4),
             Text(
-              _formatDate(memory.insertedAt),
+              DateFormatter.formatDate(memory.insertedAt),
               style: TextStyle(
                 fontSize: 12,
                 color: AppColors.textSecondary,
               ),
             ),
-            if (memory.startAge != null && memory.endAge != null) ...[
+            if (memory.startAge != null || memory.endAge != null) ...[
               const SizedBox(width: 12),
               Icon(
-                Icons.cake,
+                Icons.timeline,
                 size: 14,
                 color: AppColors.textSecondary,
               ),
               const SizedBox(width: 4),
               Text(
-                '${memory.startAge}-${memory.endAge}歳',
+                AgeRangeFormatter.formatAgeRange(
+                    memory.startAge, memory.endAge),
                 style: TextStyle(
                   fontSize: 12,
                   color: AppColors.textSecondary,
@@ -175,27 +171,5 @@ class MemoryCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    final now = DateTime.now();
-    final difference = now.difference(date).inDays;
-
-    if (difference == 0) {
-      return '今日';
-    } else if (difference == 1) {
-      return '昨日';
-    } else if (difference < 7) {
-      return '${difference}日前';
-    } else if (difference < 30) {
-      final weeks = (difference / 7).floor();
-      return '${weeks}週間前';
-    } else if (difference < 365) {
-      final months = (difference / 30).floor();
-      return '${months}ヶ月前';
-    } else {
-      final years = (difference / 365).floor();
-      return '${years}年前';
-    }
   }
 }
