@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:okataduke/core/theme/app_colors.dart';
 import '../../../../core/models/DB/memory.dart';
 import '../components/detail/memory_info.dart';
 import '../components/detail/memory_images.dart';
@@ -42,6 +43,7 @@ class MemoryDetailPage extends StatelessWidget {
             children: [
               if (memory.imagePaths != null &&
                   memory.imagePaths!.isNotEmpty) ...[
+                const SizedBox(height: 32),
                 MemoryImages(imagePaths: memory.imagePaths!),
                 const SizedBox(height: 16),
               ],
@@ -54,7 +56,9 @@ class MemoryDetailPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: onEdit,
-          child: const Icon(Icons.edit),
+          backgroundColor: AppColors.primary,
+          tooltip: '編集',
+          child: const Icon(Icons.edit, color: Colors.white),
         ),
       ),
     );

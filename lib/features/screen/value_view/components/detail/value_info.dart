@@ -4,7 +4,7 @@ import 'package:okataduke/core/theme/app_colors.dart';
 import 'package:okataduke/core/models/DB/item_keep_status.dart';
 import 'status_selector.dart';
 
-class ValueInfo extends StatelessWidget {
+class ValueInfo extends StatefulWidget {
   final ValueSearch valueSearch;
   final Function(ItemKeepStatus)? onStatusChanged;
   final Function(int?)? onPriceChanged;
@@ -15,6 +15,35 @@ class ValueInfo extends StatelessWidget {
     this.onStatusChanged,
     this.onPriceChanged,
   });
+
+  @override
+  State<ValueInfo> createState() => _ValueInfoState();
+}
+
+class _ValueInfoState extends State<ValueInfo> {
+  late TextEditingController _priceController;
+
+  @override
+  void initState() {
+    super.initState();
+    _priceController = TextEditingController(
+      text: widget.valueSearch.value?.toString() ?? '',
+    );
+  }
+
+  @override
+  void didUpdateWidget(ValueInfo oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.valueSearch.value != widget.valueSearch.value) {
+      _priceController.text = widget.valueSearch.value?.toString() ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    _priceController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +73,7 @@ class ValueInfo extends StatelessWidget {
                       ),
                 ),
                 Text(
-                  valueSearch.detectedProductName ?? '不明な商品',
+                  widget.valueSearch.detectedProductName ?? '不明な商品',
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -56,8 +85,8 @@ class ValueInfo extends StatelessWidget {
             _buildPriceInput(),
             const SizedBox(height: 16),
             StatusSelector(
-              currentStatus: valueSearch.status,
-              onStatusChanged: onStatusChanged,
+              currentStatus: widget.valueSearch.status,
+              onStatusChanged: widget.onStatusChanged,
             ),
           ],
         ),
@@ -78,7 +107,7 @@ class ValueInfo extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          initialValue: valueSearch.value?.toString() ?? '',
+          controller: _priceController,
           decoration: InputDecoration(
             prefixText: '¥ ',
             prefixStyle: const TextStyle(
@@ -110,7 +139,7 @@ class ValueInfo extends StatelessWidget {
           ),
           onChanged: (value) {
             final price = int.tryParse(value);
-            onPriceChanged?.call(price);
+            widget.onPriceChanged?.call(price);
           },
         ),
       ],
