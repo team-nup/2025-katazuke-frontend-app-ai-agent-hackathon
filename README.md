@@ -1,6 +1,7 @@
 # MonoPon - 片付け特化アプリ
 
 > **バックエンドはこちら**: https://github.com/team-nup/2025-katazuke-backend-app-ai-agent-hackathon
+
 思い出の品と不要品の整理を支援し、物理的な片付けと心理的な整理の両方をサポートする Flutter アプリケーション
 
 ## アプリ概要
@@ -112,3 +113,4 @@ lib/
 - **Container 層**: 状態管理 + ビジネスロジック（StatefulWidget）
 - モバイルファースト設計
 - カード型デザインで統一
+
